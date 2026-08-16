@@ -605,8 +605,8 @@ export default function Home() {
             <section id="command-center" className="page-section command-center" aria-labelledby="home-title">
               <div className="map-copy reveal">
                 <span className="eyebrow">OPERATOR ID // AVAILABLE FOR WORK</span>
-                <h1 id="home-title">YOUR NAME<br /><em>CREATIVE DEVELOPER</em></h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Building expressive interfaces and dependable digital systems.</p>
+                <h1 id="home-title">WILDA GHONIYU JIDDAN<br /><em>CREATIVE DEVELOPER</em></h1>
+                <p>Building expressive interfaces and dependable digital systems — from event landing platforms to AI-powered routing.</p>
                 <div className="hero-actions">
                   <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0])}>VIEW FEATURED BUILD</button>
                   <button className="pixel-button" onClick={scanProjects}>SCAN PROJECTS</button>
@@ -654,13 +654,14 @@ export default function Home() {
                     <User aria-hidden="true" />
                     <span>PORTRAIT / AVATAR<br />PENDING INPUT</span>
                   </div>
-                  <div className="operator-id"><span>OPERATOR</span><b>YOUR NAME</b><small>FULL-STACK CREATIVE DEVELOPER</small></div>
+                  <div className="operator-id"><span>OPERATOR</span><b>WILDA GHONIYU JIDDAN</b><small>FULL-STACK CREATIVE DEVELOPER</small></div>
                 </article>
                 <div className="identity-copy">
                   <div className="data-stripe"><span>LOCATION</span><b>INDONESIA / REMOTE</b></div>
+                  <div className="data-stripe"><span>EDUCATION</span><b>SISTEM INFORMASI — UPN "VETERAN" YOGYAKARTA</b></div>
                   <div className="data-stripe"><span>STATUS</span><b className="online-copy">OPEN FOR OPPORTUNITIES</b></div>
                   <div className="data-stripe"><span>FOCUS</span><b>WEB SYSTEMS / INTERACTION / AI</b></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</p>
+                  <p>Web developer yang membangun sistem nyata — CMS landing page, AI pipeline, dan antarmuka interaktif. Fokus pada arsitektur bersih, performa, dan hasil terukur.</p>
                   <div className="principles">
                     <div><b>01</b><span>CLARITY FIRST</span></div>
                     <div><b>02</b><span>BUILD WITH EVIDENCE</span></div>
