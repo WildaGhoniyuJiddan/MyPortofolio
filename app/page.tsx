@@ -815,8 +815,8 @@ export default function Home() {
                 <div className="contact-status"><i /><span>STATUS</span><b>AVAILABLE FOR SELECT OPPORTUNITIES</b></div>
                 <button className="email-copy" onClick={copyEmail}><Mail /><span>hello@example.com</span>{copied ? <Check /> : <Copy />}</button>
                 <div className="social-row">
-                  <button aria-label="GitHub placeholder"><GitBranch /> GITHUB <ExternalLink /></button>
-                  <button aria-label="LinkedIn placeholder"><Globe2 /> LINKEDIN <ExternalLink /></button>
+                  <button aria-label="GitHub" onClick={() => window.open("https://github.com/WildaGhoniyuJiddan", "_blank")}><GitBranch /> GITHUB <ExternalLink /></button>
+                  <button aria-label="LinkedIn" onClick={() => window.open("https://www.linkedin.com/in/wilda-ghoniyu-jiddan-8870bb335", "_blank")}><Globe2 /> LINKEDIN <ExternalLink /></button>
                 </div>
                 <div className="download-card">
                   <FileDown /><div><span>RESUME / PDF</span><b>PORTFOLIO-CV-2026.PDF</b><small>FILE PENDING OWNER INPUT</small></div><button disabled aria-label="Resume file not yet available"><Download /></button>
@@ -837,7 +837,7 @@ export default function Home() {
             <footer className="site-footer">
               <div className="footer-brand"><MaskIcon /><div><b>PORTFOLIO SIGNAL NETWORK</b><span>BUILT WITH INTENTION, MOTION &amp; COFFEE.</span></div></div>
               <div className="footer-links"><button onClick={() => navigateTo("command-center")}>BACK TO TOP ↑</button><button onClick={() => setBriefing(true)}>REPLAY BRIEFING</button><button onClick={() => setTerminalOpen(true)}>OPEN TERMINAL `</button></div>
-              <span>© 2026 YOUR NAME // ALL SIGNALS RESERVED</span>
+              <span>© 2026 WILDA GHONIYU JIDDAN // ALL SIGNALS RESERVED</span>
             </footer>
           </div>
         </div>
