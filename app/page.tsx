@@ -60,8 +60,25 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: "signal-alpha",
+    id: "laman-yp",
     signal: "SIG.001",
+    title: "LAMAN-YP",
+    category: "BACKEND",
+    status: "SHIPPED",
+    year: "2026",
+    role: "FULL-STACK DEVELOPER",
+    summary: "Event landing CMS — native PHP 8 + MySQL with admin panel, generate-on-save, multi-slug, and click tracking. Lets non-technical staff ship production landing pages in minutes.",
+    problem: "Institutions needed event landing pages that non-technical staff could create and publish quickly — without a fragile build pipeline or touching code.",
+    solution: "Architected a generate-on-save CMS: admin writes an event → server-side validation → renders static minified HTML → atomic folder swap. Multi-slug routing, UTM tracking, Meta/X/TikTok pixel support, automatic WebP compression.",
+    result: "Non-technical staff can now ship a production landing page in minutes. Built on prepared statements, input validation, and no secrets in the webroot — safe by architecture.",
+    stack: ["PHP 8", "MYSQL", "HTML/CSS/JS"],
+    accent: "cyan",
+    position: { left: "35%", top: "30%" },
+    featured: true,
+  },
+  {
+    id: "signal-alpha",
+    signal: "SIG.002",
     title: "PROJECT ALPHA",
     category: "FRONTEND",
     status: "SHIPPED",
@@ -74,11 +91,10 @@ const projects: Project[] = [
     stack: ["NEXT.JS", "TYPESCRIPT", "MOTION"],
     accent: "red",
     position: { left: "64%", top: "30%" },
-    featured: true,
   },
   {
     id: "signal-beta",
-    signal: "SIG.002",
+    signal: "SIG.003",
     title: "SYSTEM BETA",
     category: "BACKEND",
     status: "SHIPPED",
@@ -94,7 +110,7 @@ const projects: Project[] = [
   },
   {
     id: "signal-gamma",
-    signal: "SIG.003",
+    signal: "SIG.004",
     title: "AI SIGNAL LAB",
     category: "DATA / AI",
     status: "PROTOTYPE",
@@ -110,7 +126,7 @@ const projects: Project[] = [
   },
   {
     id: "signal-delta",
-    signal: "SIG.004",
+    signal: "SIG.005",
     title: "INTERFACE DELTA",
     category: "DESIGN",
     status: "COLLABORATION",
@@ -126,7 +142,7 @@ const projects: Project[] = [
   },
   {
     id: "signal-epsilon",
-    signal: "SIG.005",
+    signal: "SIG.006",
     title: "PROJECT EPSILON",
     category: "FRONTEND",
     status: "IN PROGRESS",
