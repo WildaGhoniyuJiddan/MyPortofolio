@@ -159,11 +159,11 @@ const projects: Project[] = [
 ];
 
 const experience = [
-  { year: "2026", code: "LOG.008", title: "FULL-STACK PRODUCT BUILD", role: "LEAD DEVELOPER", copy: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Delivered a complete product surface from architecture to production UI.", tag: "CURRENT" },
-  { year: "2026", code: "LOG.007", title: "INTELLIGENCE SYSTEM", role: "AI ENGINEER", copy: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Designed an inference workflow with clear evidence boundaries.", tag: "DEPLOYED" },
-  { year: "2025", code: "LOG.006", title: "DESIGN SYSTEM PROTOCOL", role: "UI ENGINEER", copy: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", tag: "SHIPPED" },
-  { year: "2025", code: "LOG.005", title: "WEB EXPERIENCE PROGRAM", role: "FRONTEND DEVELOPER", copy: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", tag: "SHIPPED" },
-  { year: "2024", code: "LOG.004", title: "FIRST SIGNAL DETECTED", role: "DEVELOPER", copy: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", tag: "ARCHIVE" },
+  { year: "2026", code: "LOG.008", title: "EVENT LANDING CMS", role: "ARCHITECT / FULL-STACK", copy: "Architected a PHP 8 + MySQL CMS that lets non-technical staff ship landing pages in minutes — generate-on-save with atomic folder swap, multi-slug routing, and per-event tracking.", tag: "SHIPPED" },
+  { year: "2026", code: "LOG.007", title: "AI ROUTING SYSTEM", role: "AI ENGINEER", copy: "Engineered a delay-risk prediction pipeline (FastAPI + XGBoost + SHAP + LLM) with explainable outputs for COMPFEST 18 — turning raw routes into risk scores.", tag: "COMPFEST" },
+  { year: "2025", code: "LOG.006", title: "DESIGN SYSTEM PROTOCOL", role: "UI ENGINEER", copy: "Pioneered a reusable design-token workflow that cut UI rework and kept visual language consistent across landing pages.", tag: "SHIPPED" },
+  { year: "2025", code: "LOG.005", title: "WEB EXPERIENCE PROGRAM", role: "FRONTEND DEVELOPER", copy: "Built interactive web experiences with motion, sound, and responsive layouts — from concept to production.", tag: "SHIPPED" },
+  { year: "2024", code: "LOG.004", title: "FIRST SIGNAL DETECTED", role: "DEVELOPER", copy: "Started the journey — learning to build for the web and turning curiosity into shipped products.", tag: "ARCHIVE" },
 ];
 
 const skillGroups = [
