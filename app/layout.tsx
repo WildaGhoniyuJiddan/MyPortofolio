@@ -14,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const metadataBase = new URL(`${protocol}://${host}`);
-  const title = "Portfolio Signal Network";
-  const description = "An interactive portfolio command center for projects, skills, experience, and experiments.";
+  const title = "Wilda Ghoniyu Jiddan — Creative Developer Portfolio";
+  const description = "Interactive portfolio of Wilda Ghoniyu Jiddan — web systems, interaction design, and AI-powered products. Explore projects, skills, and experience.";
   const socialImage = new URL("/og.png", metadataBase).toString();
 
   return {
