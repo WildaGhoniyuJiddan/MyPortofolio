@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Orbitron, Rajdhani, Share_Tech_Mono } from "next/font/google";
 import { headers } from "next/headers";
+import "@fontsource/orbitron/500.css";
+import "@fontsource/orbitron/700.css";
+import "@fontsource/rajdhani/400.css";
+import "@fontsource/rajdhani/500.css";
+import "@fontsource/rajdhani/600.css";
+import "@fontsource/rajdhani/700.css";
+import "@fontsource/share-tech-mono/400.css";
 import "./globals.css";
-
-const orbitron = Orbitron({ variable: "--font-display", subsets: ["latin"] });
-const rajdhani = Rajdhani({ variable: "--font-body", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
-const shareTechMono = Share_Tech_Mono({ variable: "--font-mono", subsets: ["latin"], weight: "400" });
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -38,9 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${orbitron.variable} ${rajdhani.variable} ${shareTechMono.variable}`}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

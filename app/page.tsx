@@ -175,6 +175,38 @@ const navItems = [
 
 const categories = ["ALL", "FRONTEND", "BACKEND", "DATA / AI", "DESIGN"] as const;
 
+function MaskIcon({ compact = false }: { compact?: boolean }) {
+  return (
+    <span className={`mask-icon ${compact ? "mask-icon--compact" : ""}`} aria-hidden="true">
+      <span className="mask-web" />
+      <i className="mask-eye mask-eye--left" />
+      <i className="mask-eye mask-eye--right" />
+    </span>
+  );
+}
+
+function WebLoader({ label, compact = false }: { label: string; compact?: boolean }) {
+  return (
+    <div className={`web-loader ${compact ? "web-loader--compact" : ""}`}>
+      <div className="web-spinner" aria-hidden="true">
+        <span className="web-spinner__radials" />
+        <span className="web-spinner__rings" />
+        <span className="web-spinner__sweep" />
+        <span className="web-spinner__node web-spinner__node--one" />
+        <span className="web-spinner__node web-spinner__node--two" />
+        <span className="web-spinner__node web-spinner__node--three" />
+        <MaskIcon compact={compact} />
+      </div>
+      <div className="web-loader__copy">
+        <span>PORTFOLIO-NET // WEB PROTOCOL</span>
+        <b>{label}</b>
+        <small>STABILIZING SIGNAL NODES...</small>
+      </div>
+      <div className="web-loader__track" aria-hidden="true"><i /></div>
+    </div>
+  );
+}
+
 function AmbientNetwork() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -247,6 +279,7 @@ function AmbientNetwork() {
 }
 
 export default function Home() {
+  const [booting, setBooting] = useState(true);
   const [briefing, setBriefing] = useState(true);
   const [mobileNav, setMobileNav] = useState(false);
   const [activeSection, setActiveSection] = useState("command-center");
@@ -265,9 +298,11 @@ export default function Home() {
   const [contactStatus, setContactStatus] = useState("");
   const [copied, setCopied] = useState(false);
   const [clock, setClock] = useState("00:00:00");
+  const [loadingLabel, setLoadingLabel] = useState("");
   const audioContext = useRef<AudioContext | null>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
   const terminalField = useRef<HTMLInputElement>(null);
+  const loadingTimer = useRef<number | null>(null);
 
   const filteredProjects = useMemo(
     () => projectFilter === "ALL" ? projects : projects.filter((project) => project.category === projectFilter),
@@ -281,6 +316,7 @@ export default function Home() {
   }, [logQuery]);
 
   useEffect(() => {
+    const bootTimer = window.setTimeout(() => setBooting(false), 1750);
     const preferenceTimer = window.setTimeout(() => {
       setSoundEnabled(window.localStorage.getItem("portfolio_sound_enabled") === "true");
       setBriefing(window.sessionStorage.getItem("portfolio_briefing_seen") !== "true");
@@ -289,8 +325,10 @@ export default function Home() {
     tick();
     const timer = window.setInterval(tick, 1000);
     return () => {
+      window.clearTimeout(bootTimer);
       window.clearTimeout(preferenceTimer);
       window.clearInterval(timer);
+      if (loadingTimer.current !== null) window.clearTimeout(loadingTimer.current);
     };
   }, []);
 
@@ -301,7 +339,7 @@ export default function Home() {
   }, [terminalOpen]);
 
   useEffect(() => {
-    const rootSelector = briefing ? ".briefing-panel" : terminalOpen ? ".terminal-window" : drawerOpen ? ".project-drawer" : null;
+    const rootSelector = booting ? null : briefing ? ".briefing-panel" : terminalOpen ? ".terminal-window" : drawerOpen ? ".project-drawer" : null;
     if (!rootSelector) return;
     const root = document.querySelector<HTMLElement>(rootSelector);
     if (!root) return;
@@ -326,7 +364,7 @@ export default function Home() {
       window.clearTimeout(firstFocusTimer);
       root.removeEventListener("keydown", trapFocus);
     };
-  }, [briefing, drawerOpen, terminalOpen]);
+  }, [booting, briefing, drawerOpen, terminalOpen]);
 
   useEffect(() => {
     const sections = navItems.map((item) => document.getElementById(item.id)).filter(Boolean) as HTMLElement[];
@@ -345,14 +383,14 @@ export default function Home() {
         if (terminalOpen) setTerminalOpen(false);
         if (mobileNav) setMobileNav(false);
       }
-      if (event.key === "`" && !briefing) {
+      if (event.key === "`" && !briefing && !booting) {
         event.preventDefault();
         setTerminalOpen((value) => !value);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [briefing, drawerOpen, mobileNav, terminalOpen]);
+  }, [booting, briefing, drawerOpen, mobileNav, terminalOpen]);
 
   const ensureAudio = async () => {
     if (!audioContext.current) audioContext.current = new AudioContext();
@@ -404,6 +442,16 @@ export default function Home() {
     setBriefing(false);
   };
 
+  const runLoading = (label: string, action: () => void, duration = 520) => {
+    if (loadingTimer.current !== null) window.clearTimeout(loadingTimer.current);
+    setLoadingLabel(label);
+    loadingTimer.current = window.setTimeout(() => {
+      action();
+      setLoadingLabel("");
+      loadingTimer.current = null;
+    }, duration);
+  };
+
   const navigateTo = (id: string) => {
     playCue("click");
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -413,10 +461,22 @@ export default function Home() {
 
   const openProject = (project: Project) => {
     lastFocus.current = document.activeElement as HTMLElement;
-    setSelectedProject(project);
-    setDrawerOpen(true);
-    playCue("ping");
-    window.history.replaceState(null, "", `#project/${project.id}`);
+    runLoading("DECODING PROJECT SIGNAL", () => {
+      setSelectedProject(project);
+      setDrawerOpen(true);
+      playCue("ping");
+      window.history.replaceState(null, "", `#project/${project.id}`);
+    }, 480);
+  };
+
+  const scanProjects = () => {
+    playCue("click");
+    runLoading("SCANNING PROJECT NETWORK", () => navigateTo("project-network"), 680);
+  };
+
+  const applyProjectFilter = (category: (typeof categories)[number]) => {
+    playCue("click");
+    runLoading("REWEAVING PROJECT GRID", () => setProjectFilter(category), 340);
   };
 
   const closeProject = () => {
@@ -481,8 +541,11 @@ export default function Home() {
 
   const submitContact = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setContactStatus("DEMO MODE — CONNECT A REAL EMAIL OR FORM ENDPOINT BEFORE LAUNCH.");
-    playCue("success");
+    playCue("click");
+    runLoading("TRANSMITTING SECURE SIGNAL", () => {
+      setContactStatus("DEMO MODE — CONNECT A REAL EMAIL OR FORM ENDPOINT BEFORE LAUNCH.");
+      playCue("success");
+    }, 900);
   };
 
   const copyEmail = async () => {
@@ -493,15 +556,29 @@ export default function Home() {
   };
 
   return (
-    <main className="app-shell">
+    <main className="app-shell" aria-busy={booting || Boolean(loadingLabel)}>
       <AmbientNetwork />
       <div className="ambient-grid" aria-hidden="true" />
+
+      {booting && (
+        <section className="boot-loader" role="status" aria-live="polite" aria-label="Loading portfolio network">
+          <div className="boot-loader__scan" aria-hidden="true" />
+          <WebLoader label="WEAVING PORTFOLIO NETWORK" />
+          <div className="boot-loader__coordinates" aria-hidden="true"><span>NODE 08</span><span>SECTOR NYC-616</span><span>SYNC 100%</span></div>
+        </section>
+      )}
+
+      {!booting && loadingLabel && (
+        <div className="signal-loading" role="status" aria-live="polite">
+          <WebLoader label={loadingLabel} compact />
+        </div>
+      )}
 
       <section className="control-room" aria-label="Portfolio Signal Network">
         <header className="topbar">
           <button className="icon-button mobile-only" aria-label="Open navigation" onClick={() => setMobileNav(true)}><Menu /></button>
           <button className="brand-mark" onClick={() => navigateTo("command-center")} aria-label="Go to command center">
-            <Crosshair aria-hidden="true" />
+            <MaskIcon compact />
             <span>PORTFOLIO<br /><b>SIGNAL NETWORK</b></span>
           </button>
           <div className="ruler" aria-hidden="true"><i>10</i><i>20</i><i>30</i><i>40</i></div>
@@ -532,7 +609,7 @@ export default function Home() {
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Building expressive interfaces and dependable digital systems.</p>
                 <div className="hero-actions">
                   <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0])}>VIEW FEATURED BUILD</button>
-                  <button className="pixel-button" onClick={() => navigateTo("project-network")}>SCAN PROJECTS</button>
+                  <button className="pixel-button" onClick={scanProjects}>SCAN PROJECTS</button>
                 </div>
                 <button className="scroll-hint" onClick={() => navigateTo("identity")}><ArrowDown /> SCROLL TO DECODE</button>
               </div>
@@ -622,7 +699,7 @@ export default function Home() {
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Select a transmission to inspect its role, system, and outcome.</p>
               </div>
               <div className="filter-bar" role="group" aria-label="Filter projects">
-                {categories.map((category) => <button key={category} className={projectFilter === category ? "is-active" : ""} onClick={() => { setProjectFilter(category); playCue("click"); }}>{category}<span>{category === "ALL" ? projects.length : projects.filter((project) => project.category === category).length}</span></button>)}
+                {categories.map((category) => <button key={category} className={projectFilter === category ? "is-active" : ""} onClick={() => applyProjectFilter(category)}>{category}<span>{category === "ALL" ? projects.length : projects.filter((project) => project.category === category).length}</span></button>)}
               </div>
               <div className="project-grid">
                 {filteredProjects.map((project, index) => (
@@ -656,7 +733,7 @@ export default function Home() {
                 <div className="telemetry-radar" aria-hidden="true">
                   <div className="telemetry-sweep" />
                   <span className="axis axis--x" /><span className="axis axis--y" />
-                  {skillGroups.map((group, index) => <button key={group.id} className={`telemetry-node telemetry-node--${index + 1} ${skillGroup === group.id ? "is-active" : ""}`} onClick={() => setSkillGroup(group.id)} tabIndex={-1}><i /><span>{group.title}</span></button>)}
+                  {skillGroups.map((group, index) => <button key={group.id} className={`telemetry-node telemetry-node--${index + 1} ${skillGroup === group.id ? "is-active" : ""}`} onClick={() => setSkillGroup(group.id)} tabIndex={-1}><i /><span>{group.id === "data" ? "DATA / AI" : group.id.toUpperCase()}</span></button>)}
                   <div className="radar-center"><Crosshair /><span>SKILL CORE</span></div>
                 </div>
                 <div className="skill-panels">
@@ -741,7 +818,7 @@ export default function Home() {
             </section>
 
             <footer className="site-footer">
-              <div className="footer-brand"><Crosshair /><div><b>PORTFOLIO SIGNAL NETWORK</b><span>BUILT WITH INTENTION, MOTION &amp; COFFEE.</span></div></div>
+              <div className="footer-brand"><MaskIcon /><div><b>PORTFOLIO SIGNAL NETWORK</b><span>BUILT WITH INTENTION, MOTION &amp; COFFEE.</span></div></div>
               <div className="footer-links"><button onClick={() => navigateTo("command-center")}>BACK TO TOP ↑</button><button onClick={() => setBriefing(true)}>REPLAY BRIEFING</button><button onClick={() => setTerminalOpen(true)}>OPEN TERMINAL `</button></div>
               <span>© 2026 YOUR NAME // ALL SIGNALS RESERVED</span>
             </footer>
@@ -758,12 +835,12 @@ export default function Home() {
         </nav>
       </section>
 
-      {briefing && (
+      {!booting && briefing && (
         <section className="briefing" role="dialog" aria-modal="true" aria-labelledby="briefing-title">
           <div className="briefing-scan" aria-hidden="true" />
           <div className="briefing-panel">
             <span className="eyebrow">PORTFOLIO-NET // ACCESS POINT</span>
-            <div className="briefing-radar"><Crosshair /><i /><i /><i /></div>
+            <div className="briefing-radar"><MaskIcon /><i /><i /><i /></div>
             <div className="boot-lines"><span>SCANNING IDENTITY</span><span>PROJECT DATA: READY</span><span>CHANNEL: OPEN</span></div>
             <h2 id="briefing-title">SIGNAL FOUND.</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enter the network to explore selected work, systems, and experiments.</p>
