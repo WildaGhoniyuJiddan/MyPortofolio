@@ -84,8 +84,8 @@ const projects: Project[] = [
     status: "SHIPPED",
     year: "2026",
     role: "LEAD DEVELOPER",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A high-impact digital experience built around clarity, motion, and fast interaction.",
-    problem: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    summary: "A high-impact digital experience built around clarity, motion, and fast interaction.",
+    problem: "A high-impact digital experience needed clarity, motion, and fast interaction across every touchpoint.",
     solution: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     result: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     stack: ["NEXT.JS", "TYPESCRIPT", "MOTION"],
@@ -100,7 +100,7 @@ const projects: Project[] = [
     status: "SHIPPED",
     year: "2026",
     role: "FULL-STACK DEVELOPER",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A dependable platform connecting content, workflows, and measurable outcomes.",
+    summary: "A dependable platform connecting content, workflows, and measurable outcomes.",
     problem: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
     solution: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.",
     result: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
@@ -116,7 +116,7 @@ const projects: Project[] = [
     status: "PROTOTYPE",
     year: "2026",
     role: "AI ENGINEER",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. An explainable intelligence layer designed for practical decisions.",
+    summary: "An explainable intelligence layer designed for practical decisions.",
     problem: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.",
     solution: "Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio.",
     result: "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.",
@@ -132,7 +132,7 @@ const projects: Project[] = [
     status: "COLLABORATION",
     year: "2025",
     role: "UI ENGINEER",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A modular interface system joining product thinking and expressive execution.",
+    summary: "A modular interface system joining product thinking and expressive execution.",
     problem: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
     solution: "Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. Excepteur sint occaecat cupidatat non proident.",
     result: "Sunt in culpa qui officia deserunt mollit anim id est laborum et dolorum fuga.",
@@ -148,8 +148,8 @@ const projects: Project[] = [
     status: "IN PROGRESS",
     year: "2026",
     role: "CREATIVE DEVELOPER",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A cinematic web experiment exploring spatial navigation and sound.",
-    problem: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+    summary: "A cinematic web experiment exploring spatial navigation and sound.",
+    problem: "A spatial web experiment needed to feel cinematic while staying fast and accessible.",
     solution: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
     result: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
     stack: ["WEBGL", "CANVAS", "WEB AUDIO"],
@@ -174,9 +174,9 @@ const skillGroups = [
 ];
 
 const archiveItems = [
-  { index: "01", type: "EXPERIMENT", title: "SIGNAL VISUALIZER", copy: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio praesent libero.", meta: "CANVAS / AUDIO", color: "cyan" },
-  { index: "02", type: "CASE NOTE", title: "MOTION AS FEEDBACK", copy: "Sed cursus ante dapibus diam. Sed nisi nulla quis sem at nibh elementum imperdiet.", meta: "ARTICLE / 08 MIN", color: "red" },
-  { index: "03", type: "PROTOTYPE", title: "RADAR UI STUDY", copy: "Duis sagittis ipsum. Praesent mauris fusce nec tellus sed augue semper porta.", meta: "INTERACTIVE DEMO", color: "green" },
+  { index: "01", type: "EXPERIMENT", title: "SIGNAL VISUALIZER", copy: "A canvas-based signal visualizer exploring motion and audio feedback.", meta: "CANVAS / AUDIO", color: "cyan" },
+  { index: "02", type: "CASE NOTE", title: "MOTION AS FEEDBACK", copy: "Why motion belongs in interfaces — and how feedback loops make software feel alive.", meta: "ARTICLE / 08 MIN", color: "red" },
+  { index: "03", type: "PROTOTYPE", title: "RADAR UI STUDY", copy: "A radar-inspired interface study pushing density and readability to the edge.", meta: "INTERACTIVE DEMO", color: "green" },
 ];
 
 const navItems = [
@@ -661,7 +661,7 @@ export default function Home() {
               <div className="section-heading">
                 <span className="section-code">ID.01 / IDENTITY SIGNAL</span>
                 <h2 id="identity-title">THE OPERATOR<br /><em>BEHIND THE SYSTEM.</em></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent libero sed cursus ante dapibus diam. Sed nisi nulla quis sem at nibh elementum imperdiet.</p>
+                <p>Web systems, interaction, and AI — built with clean architecture, measurable results, and a bit of motion.</p>
               </div>
               <div className="identity-grid">
                 <article className="operator-card">
@@ -674,7 +674,7 @@ export default function Home() {
                 </article>
                 <div className="identity-copy">
                   <div className="data-stripe"><span>LOCATION</span><b>INDONESIA / REMOTE</b></div>
-                  <div className="data-stripe"><span>EDUCATION</span><b>SISTEM INFORMASI — UPN "VETERAN" YOGYAKARTA</b></div>
+                  <div className="data-stripe"><span>EDUCATION</span><b>SISTEM INFORMASI — UPN &quot;VETERAN&quot; YOGYAKARTA</b></div>
                   <div className="data-stripe"><span>STATUS</span><b className="online-copy">OPEN FOR OPPORTUNITIES</b></div>
                   <div className="data-stripe"><span>FOCUS</span><b>WEB SYSTEMS / INTERACTION / AI</b></div>
                   <p>Web developer yang membangun sistem nyata — CMS landing page, AI pipeline, dan antarmuka interaktif. Fokus pada arsitektur bersih, performa, dan hasil terukur.</p>
@@ -713,7 +713,7 @@ export default function Home() {
             <section id="project-network" className="page-section projects-section" aria-labelledby="projects-title">
               <div className="section-heading section-heading--row">
                 <div><span className="section-code">NET.02 / PROJECT NETWORK</span><h2 id="projects-title">SIGNALS ACROSS<br /><em>THE GRID.</em></h2></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Select a transmission to inspect its role, system, and outcome.</p>
+                <p>Select a transmission to inspect its role, system, and outcome.</p>
               </div>
               <div className="filter-bar" role="group" aria-label="Filter projects">
                 {categories.map((category) => <button key={category} className={projectFilter === category ? "is-active" : ""} onClick={() => applyProjectFilter(category)}>{category}<span>{category === "ALL" ? projects.length : projects.filter((project) => project.category === category).length}</span></button>)}
@@ -744,7 +744,7 @@ export default function Home() {
               <div className="section-heading">
                 <span className="section-code">TEL.03 / SKILLS TELEMETRY</span>
                 <h2 id="skills-title">CAPABILITY<br /><em>SCAN RESULTS.</em></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Every capability is connected to a project signal—not an arbitrary percentage.</p>
+                <p>Every capability is backed by a real project signal — from PHP 8 CMS work to AI prediction pipelines.</p>
               </div>
               <div className="skills-layout">
                 <div className="telemetry-radar" aria-hidden="true">
@@ -795,7 +795,7 @@ export default function Home() {
             <section id="lab" className="page-section lab-section" aria-labelledby="lab-title">
               <div className="section-heading section-heading--row">
                 <div><span className="section-code">LAB.05 / ARCHIVE</span><h2 id="lab-title">SIDE QUESTS &<br /><em>EXPERIMENTS.</em></h2></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Small transmissions where curiosity becomes a working prototype.</p>
+                <p>Small transmissions where curiosity becomes a working prototype — experiments in motion, audio, and interfaces.</p>
               </div>
               <div className="archive-grid">
                 {archiveItems.map((item) => (
@@ -811,7 +811,7 @@ export default function Home() {
               <div className="contact-intro">
                 <span className="section-code">COM.06 / OPEN CHANNEL</span>
                 <h2 id="contact-title">LET&apos;S BUILD<br /><em>THE NEXT SIGNAL.</em></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Have a role, project, or strange web idea? Open a channel.</p>
+                <p>Have a role, project, or strange web idea? Open a channel.</p>
                 <div className="contact-status"><i /><span>STATUS</span><b>AVAILABLE FOR SELECT OPPORTUNITIES</b></div>
                 <button className="email-copy" onClick={copyEmail}><Mail /><span>hello@example.com</span>{copied ? <Check /> : <Copy />}</button>
                 <div className="social-row">
@@ -860,7 +860,7 @@ export default function Home() {
             <div className="briefing-radar"><MaskIcon /><i /><i /><i /></div>
             <div className="boot-lines"><span>SCANNING IDENTITY</span><span>PROJECT DATA: READY</span><span>CHANNEL: OPEN</span></div>
             <h2 id="briefing-title">SIGNAL FOUND.</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enter the network to explore selected work, systems, and experiments.</p>
+            <p>Enter the network to explore selected work, systems, and experiments.</p>
             <div className="briefing-tabs"><span>01 SCAN</span><span>02 FILTER</span><span>03 DECODE</span></div>
             <div className="briefing-actions">
               <button className="pixel-button pixel-button--red" onClick={() => dismissBriefing(true)}>OPEN + SOUND</button>
