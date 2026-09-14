@@ -570,7 +570,7 @@ export default function Home() {
   };
 
   const copyEmail = async () => {
-    await navigator.clipboard?.writeText("hello@example.com");
+    await navigator.clipboard?.writeText("ezajidan@gmail.com");
     setCopied(true);
     playCue("success");
     window.setTimeout(() => setCopied(false), 1800);
@@ -670,10 +670,19 @@ export default function Home() {
               </div>
               <div className="identity-grid">
                 <article className="operator-card">
-                  <div className="operator-visual" aria-label="Portfolio owner portrait placeholder">
+                  <div className="operator-visual" aria-label="Wilda Ghoniyu Jiddan operator portrait">
                     <div className="portrait-scan" aria-hidden="true" />
-                    <User aria-hidden="true" />
-                    <span>PORTRAIT / AVATAR<br />PENDING INPUT</span>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/aku.jpg"
+                      alt="Wilda Ghoniyu Jiddan"
+                      className="operator-photo"
+                      width={310}
+                      height={340}
+                      loading="lazy"
+                    />
+                    <div className="operator-photo-overlay" aria-hidden="true" />
+                    <span className="operator-tag">SIGNAL LOCKED // OPERATOR IDENTIFIED</span>
                   </div>
                   <div className="operator-id"><span>OPERATOR</span><b>WILDA GHONIYU JIDDAN</b><small>FULL-STACK CREATIVE DEVELOPER</small></div>
                 </article>
@@ -824,13 +833,28 @@ export default function Home() {
                 <h2 id="contact-title">LET&apos;S BUILD<br /><em>THE NEXT SIGNAL.</em></h2>
                 <p>Have a role, project, or strange web idea? Open a channel.</p>
                 <div className="contact-status"><i /><span>STATUS</span><b>AVAILABLE FOR SELECT OPPORTUNITIES</b></div>
-                <button className="email-copy" onClick={copyEmail}><Mail /><span>hello@example.com</span>{copied ? <Check /> : <Copy />}</button>
+                <button className="email-copy" onClick={copyEmail}><Mail /><span>ezajidan@gmail.com</span>{copied ? <Check /> : <Copy />}</button>
                 <div className="social-row">
-                  <button aria-label="GitHub" onClick={() => window.open("https://github.com/WildaGhoniyuJiddan", "_blank")}><GitBranch /> GITHUB <ExternalLink /></button>
-                  <button aria-label="LinkedIn" onClick={() => window.open("https://www.linkedin.com/in/wilda-ghoniyu-jiddan-8870bb335", "_blank")}><Globe2 /> LINKEDIN <ExternalLink /></button>
+                  <button aria-label="GitHub" onClick={() => window.open("https://github.com/WildaGhoniyuJiddan/WorthGaBang-", "_blank")}><GitBranch /> GITHUB <ExternalLink /></button>
+                  <button aria-label="LinkedIn" onClick={() => window.open("https://www.linkedin.com/in/wilda-ghoniyu-jiddan/", "_blank")}><Globe2 /> LINKEDIN <ExternalLink /></button>
                 </div>
                 <div className="download-card">
-                  <FileDown /><div><span>RESUME / PDF</span><b>PORTFOLIO-CV-2026.PDF</b><small>FILE PENDING OWNER INPUT</small></div><button disabled aria-label="Resume file not yet available"><Download /></button>
+                  <FileDown />
+                  <div>
+                    <span>RESUME / CV (PDF)</span>
+                    <b>WILDA-GHONIYU-JIDDAN-CV.PDF</b>
+                    <small>VERIFIED OPERATOR CREDENTIALS</small>
+                  </div>
+                  <a
+                    href="/cv.pdf"
+                    download="Wilda-Ghoniyu-Jiddan-CV.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Download Wilda Ghoniyu Jiddan CV"
+                    onClick={() => playCue("click")}
+                  >
+                    <Download />
+                  </a>
                 </div>
               </div>
               <form className="contact-form" onSubmit={submitContact}>
