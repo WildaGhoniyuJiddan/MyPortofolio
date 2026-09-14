@@ -9,3 +9,4 @@ dist/
 *.log
 *.tsbuildinfo
 assets/images/spider-logo.svg
+.hermes/
