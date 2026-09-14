@@ -14,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const metadataBase = new URL(`${protocol}://${host}`);
-  const title = "Wilda Ghoniyu Jiddan — Creative Developer Portfolio";
-  const description = "Interactive portfolio of Wilda Ghoniyu Jiddan — web systems, interaction design, and AI-powered products. Explore projects, skills, and experience.";
+  const title = "Wilda Ghoniyu Jiddan — IT Specialist Portfolio";
+  const description = "Interactive portfolio of Wilda Ghoniyu Jiddan — IT Specialist focusing on web systems, software development, and AI-powered products. Explore projects, skills, and experience.";
   const socialImage = new URL("/og.png", metadataBase).toString();
 
   return {

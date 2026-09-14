@@ -67,7 +67,7 @@ const projects: Project[] = [
     title: "LAMAN-YP",
     category: "BACKEND",
     status: "SHIPPED",
-    year: "2025",
+    year: "2026",
     role: "FULL-STACK DEVELOPER",
     summary: "Event landing CMS — native PHP 8 & MySQL with automated static generation, non-blocking click tracking, and an intuitive admin panel.",
     problem: "Creating event landing pages manually was slow and required developer intervention, while campaign teams lacked an integrated way to track CTA click analytics per event.",
@@ -75,7 +75,7 @@ const projects: Project[] = [
     result: "Reduced landing page turnaround time from days to minutes, delivered instant click telemetry, and enabled non-technical staff to safely launch production-ready pages.",
     stack: ["PHP 8", "MYSQL", "APACHE", "GD / FILEINFO", "HTML/CSS/JS"],
     accent: "cyan",
-    position: { left: "35%", top: "30%" },
+    position: { left: "32%", top: "42%" },
     featured: true,
   },
   {
@@ -92,80 +92,16 @@ const projects: Project[] = [
     result: "Delivers data-driven purchase recommendations in seconds, slashes pre-purchase research time from hours to minutes, and gives buyers transparent bargaining leverage.",
     stack: ["NEXT.JS", "TYPESCRIPT", "PYTHON", "SUPABASE", "TAILWIND CSS", "VERCEL"],
     accent: "green",
-    position: { left: "64%", top: "30%" },
+    position: { left: "68%", top: "42%" },
     featured: true,
     demoUrl: "https://worthgabang-hv6x0qn8n-mooix.vercel.app",
     repoUrl: "https://github.com/WildaGhoniyuJiddan/WorthGaBang",
-  },
-  {
-    id: "signal-beta",
-    signal: "SIG.003",
-    title: "SYSTEM BETA",
-    category: "BACKEND",
-    status: "SHIPPED",
-    year: "2026",
-    role: "FULL-STACK DEVELOPER",
-    summary: "A dependable platform connecting content, workflows, and measurable outcomes.",
-    problem: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-    solution: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.",
-    result: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-    stack: ["NODE.JS", "POSTGRES", "REST API"],
-    accent: "cyan",
-    position: { left: "35%", top: "55%" },
-  },
-  {
-    id: "signal-gamma",
-    signal: "SIG.004",
-    title: "AI SIGNAL LAB",
-    category: "DATA / AI",
-    status: "PROTOTYPE",
-    year: "2026",
-    role: "AI ENGINEER",
-    summary: "An explainable intelligence layer designed for practical decisions.",
-    problem: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.",
-    solution: "Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio.",
-    result: "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.",
-    stack: ["PYTHON", "FASTAPI", "XGBOOST"],
-    accent: "green",
-    position: { left: "72%", top: "65%" },
-  },
-  {
-    id: "signal-delta",
-    signal: "SIG.005",
-    title: "INTERFACE DELTA",
-    category: "DESIGN",
-    status: "COLLABORATION",
-    year: "2025",
-    role: "UI ENGINEER",
-    summary: "A modular interface system joining product thinking and expressive execution.",
-    problem: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
-    solution: "Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. Excepteur sint occaecat cupidatat non proident.",
-    result: "Sunt in culpa qui officia deserunt mollit anim id est laborum et dolorum fuga.",
-    stack: ["FIGMA", "REACT", "DESIGN SYSTEM"],
-    accent: "amber",
-    position: { left: "48%", top: "77%" },
-  },
-  {
-    id: "signal-epsilon",
-    signal: "SIG.006",
-    title: "PROJECT EPSILON",
-    category: "FRONTEND",
-    status: "IN PROGRESS",
-    year: "2026",
-    role: "CREATIVE DEVELOPER",
-    summary: "A cinematic web experiment exploring spatial navigation and sound.",
-    problem: "A spatial web experiment needed to feel cinematic while staying fast and accessible.",
-    solution: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
-    result: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
-    stack: ["WEBGL", "CANVAS", "WEB AUDIO"],
-    accent: "red",
-    position: { left: "82%", top: "48%" },
   },
 ];
 
 const experience = [
   { year: "2026", code: "LOG.008", title: "WORL — AI WORTH-IT CHECKER", role: "FULL-STACK / AI ENGINEER", copy: "Engineered an AI price-intelligence platform scraping marketplaces to evaluate laptop/PC value against hardware market baselines.", tag: "SHIPPED" },
-  { year: "2025", code: "LOG.007", title: "LAMAN-YP — EVENT CMS", role: "FULL-STACK DEVELOPER", copy: "Architected a native PHP 8 + MySQL CMS with automated static generation, non-blocking click tracking, and admin asset management.", tag: "SHIPPED" },
+  { year: "2026", code: "LOG.007", title: "LAMAN-YP — EVENT CMS", role: "FULL-STACK DEVELOPER", copy: "Architected a native PHP 8 + MySQL CMS with automated static generation, non-blocking click tracking, and admin asset management.", tag: "SHIPPED" },
   { year: "2025", code: "LOG.006", title: "AI ROUTING SYSTEM", role: "AI ENGINEER", copy: "Engineered a delay-risk prediction pipeline (FastAPI + XGBoost + SHAP + LLM) with explainable outputs for COMPFEST 18 — turning raw routes into risk scores.", tag: "COMPFEST" },
   { year: "2025", code: "LOG.005", title: "DESIGN SYSTEM PROTOCOL", role: "UI ENGINEER", copy: "Pioneered a reusable design-token workflow that cut UI rework and kept visual language consistent across landing pages.", tag: "SHIPPED" },
   { year: "2024", code: "LOG.004", title: "FIRST SIGNAL DETECTED", role: "DEVELOPER", copy: "Started the journey — learning to build for the web and turning curiosity into shipped products.", tag: "ARCHIVE" },
@@ -194,7 +130,7 @@ const navItems = [
   { id: "contact", label: "CONTACT", icon: Radio },
 ];
 
-const categories = ["ALL", "FRONTEND", "BACKEND", "DATA / AI", "DESIGN"] as const;
+const categories = ["ALL", "BACKEND", "DATA / AI"] as const;
 
 function MaskIcon({ compact = false }: { compact?: boolean }) {
   return (
@@ -640,7 +576,7 @@ export default function Home() {
             <section id="command-center" className="page-section command-center" aria-labelledby="home-title">
               <div className="map-copy reveal">
                 <span className="eyebrow">OPERATOR ID // AVAILABLE FOR WORK</span>
-                <h1 id="home-title">WILDA GHONIYU JIDDAN<br /><em>CREATIVE DEVELOPER</em></h1>
+                <h1 id="home-title">WILDA GHONIYU JIDDAN<br /><em>IT SPECIALIST</em></h1>
                 <p>Building expressive interfaces and dependable digital systems — from event landing platforms to AI-powered routing.</p>
                 <div className="hero-actions">
                   <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0])}>VIEW FEATURED BUILD</button>
@@ -705,14 +641,14 @@ export default function Home() {
                     <div className="operator-photo-overlay" aria-hidden="true" />
                     <span className="operator-tag">SIGNAL LOCKED // OPERATOR IDENTIFIED</span>
                   </div>
-                  <div className="operator-id"><span>OPERATOR</span><b>WILDA GHONIYU JIDDAN</b><small>FULL-STACK CREATIVE DEVELOPER</small></div>
+                  <div className="operator-id"><span>OPERATOR</span><b>WILDA GHONIYU JIDDAN</b><small>FULL-STACK IT SPECIALIST</small></div>
                 </article>
                 <div className="identity-copy">
                   <div className="data-stripe"><span>LOCATION</span><b>INDONESIA / REMOTE</b></div>
                   <div className="data-stripe"><span>EDUCATION</span><b>SISTEM INFORMASI — UPN &quot;VETERAN&quot; YOGYAKARTA</b></div>
                   <div className="data-stripe"><span>STATUS</span><b className="online-copy">OPEN FOR OPPORTUNITIES</b></div>
                   <div className="data-stripe"><span>FOCUS</span><b>WEB SYSTEMS / INTERACTION / AI</b></div>
-                  <p>Web developer yang membangun sistem nyata — CMS landing page, AI pipeline, dan antarmuka interaktif. Fokus pada arsitektur bersih, performa, dan hasil terukur.</p>
+                  <p>IT Specialist &amp; Developer yang membangun sistem nyata — CMS landing page, AI pipeline, dan antarmuka interaktif. Fokus pada arsitektur bersih, performa, dan hasil terukur.</p>
                   <div className="principles">
                     <div><b>01</b><span>CLARITY FIRST</span></div>
                     <div><b>02</b><span>BUILD WITH EVIDENCE</span></div>
