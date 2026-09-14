@@ -506,6 +506,20 @@ export default function Home() {
     window.setTimeout(() => lastFocus.current?.focus(), 50);
   };
 
+  const nextProject = () => {
+    const currentIndex = projects.findIndex((p) => p.id === selectedProject.id);
+    const nextIndex = (currentIndex + 1) % projects.length;
+    setSelectedProject(projects[nextIndex]);
+    playCue("ping");
+  };
+
+  const prevProject = () => {
+    const currentIndex = projects.findIndex((p) => p.id === selectedProject.id);
+    const prevIndex = (currentIndex - 1 + projects.length) % projects.length;
+    setSelectedProject(projects[prevIndex]);
+    playCue("ping");
+  };
+
   const submitTerminal = (event: FormEvent) => {
     event.preventDefault();
     const raw = terminalInput.trim();
@@ -656,7 +670,14 @@ export default function Home() {
                 <h2>{selectedProject.title}</h2>
                 <p>{selectedProject.summary}</p>
                 <div className="tag-row">{selectedProject.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                <button className="text-link" onClick={() => openProject(selectedProject)}>OPEN CASE FILE <ExternalLink /></button>
+                <div className="signal-card__bottom">
+                  <button className="text-link" onClick={() => openProject(selectedProject)}>OPEN CASE FILE <ExternalLink /></button>
+                  <div className="signal-cycler">
+                    <button type="button" onClick={prevProject} aria-label="Previous project signal" title="Previous signal">◀</button>
+                    <span>{projects.findIndex((p) => p.id === selectedProject.id) + 1} / {projects.length}</span>
+                    <button type="button" onClick={nextProject} aria-label="Next project signal" title="Next signal">▶</button>
+                  </div>
+                </div>
               </aside>
 
               <div className="map-coordinates" aria-hidden="true"><span>X 40.7128</span><span>Y −74.0060</span><span>ZOOM 04</span></div>
@@ -877,7 +898,33 @@ export default function Home() {
           </div>
         </div>
 
-        <footer className="ticker"><span>LIVE SIGNAL</span><div><b>01</b> PROJECT NETWORK ONLINE&nbsp;&nbsp;///&nbsp;&nbsp;<b>02</b> OPEN FOR COLLABORATION&nbsp;&nbsp;///&nbsp;&nbsp;<b>03</b> SYSTEM STATUS: STABLE&nbsp;&nbsp;///&nbsp;&nbsp;<b>04</b> PRESS ` TO OPEN TERMINAL</div><time>{clock}</time></footer>
+        <footer className="ticker" aria-label="System status ticker">
+          <div className="ticker__badge">
+            <span className="ticker__badge-dot" aria-hidden="true" />
+            <span>LIVE SIGNAL</span>
+          </div>
+          <div className="ticker__track">
+            <div className="ticker__content">
+              <span><b>01</b> PROJECT NETWORK ONLINE</span>
+              <span className="ticker__sep">{"///"}</span>
+              <span><b>02</b> OPEN FOR COLLABORATION</span>
+              <span className="ticker__sep">{"///"}</span>
+              <span><b>03</b> SYSTEM STATUS: STABLE</span>
+              <span className="ticker__sep">{"///"}</span>
+              <span><b>04</b> PRESS ` TO OPEN TERMINAL</span>
+              <span className="ticker__sep">{"///"}</span>
+              <span><b>01</b> PROJECT NETWORK ONLINE</span>
+              <span className="ticker__sep">{"///"}</span>
+              <span><b>02</b> OPEN FOR COLLABORATION</span>
+              <span className="ticker__sep">{"///"}</span>
+              <span><b>03</b> SYSTEM STATUS: STABLE</span>
+              <span className="ticker__sep">{"///"}</span>
+              <span><b>04</b> PRESS ` TO OPEN TERMINAL</span>
+              <span className="ticker__sep">{"///"}</span>
+            </div>
+          </div>
+          <time className="ticker__clock">{clock}</time>
+        </footer>
 
         <nav className="mobile-bottom-nav" aria-label="Mobile primary navigation">
           {navItems.filter((item) => ["command-center", "project-network", "skills", "experience", "contact"].includes(item.id)).map((item) => {
