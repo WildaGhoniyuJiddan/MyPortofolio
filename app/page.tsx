@@ -56,6 +56,8 @@ type Project = {
   accent: "red" | "cyan" | "green" | "amber";
   position: { left: string; top: string };
   featured?: boolean;
+  demoUrl?: string;
+  repoUrl?: string;
 };
 
 const projects: Project[] = [
@@ -65,32 +67,35 @@ const projects: Project[] = [
     title: "LAMAN-YP",
     category: "BACKEND",
     status: "SHIPPED",
-    year: "2026",
+    year: "2025",
     role: "FULL-STACK DEVELOPER",
-    summary: "Event landing CMS — native PHP 8 + MySQL with admin panel, generate-on-save, multi-slug, and click tracking. Lets non-technical staff ship production landing pages in minutes.",
-    problem: "Institutions needed event landing pages that non-technical staff could create and publish quickly — without a fragile build pipeline or touching code.",
-    solution: "Architected a generate-on-save CMS: admin writes an event → server-side validation → renders static minified HTML → atomic folder swap. Multi-slug routing, UTM tracking, Meta/X/TikTok pixel support, automatic WebP compression.",
-    result: "Non-technical staff can now ship a production landing page in minutes. Built on prepared statements, input validation, and no secrets in the webroot — safe by architecture.",
-    stack: ["PHP 8", "MYSQL", "HTML/CSS/JS"],
+    summary: "Event landing CMS — native PHP 8 & MySQL with automated static generation, non-blocking click tracking, and an intuitive admin panel.",
+    problem: "Creating event landing pages manually was slow and required developer intervention, while campaign teams lacked an integrated way to track CTA click analytics per event.",
+    solution: "Architected a generate-on-save CMS: admin manages event data and uploads assets with GD/Fileinfo validation, which compiles into static minified HTML with atomic swapping. Built a non-blocking beacon API for real-time click tracking and pixel configuration without impacting page speed.",
+    result: "Reduced landing page turnaround time from days to minutes, delivered instant click telemetry, and enabled non-technical staff to safely launch production-ready pages.",
+    stack: ["PHP 8", "MYSQL", "APACHE", "GD / FILEINFO", "HTML/CSS/JS"],
     accent: "cyan",
     position: { left: "35%", top: "30%" },
     featured: true,
   },
   {
-    id: "signal-alpha",
+    id: "worl",
     signal: "SIG.002",
-    title: "PROJECT ALPHA",
-    category: "FRONTEND",
+    title: "WorL — AI WORTH-IT CHECKER",
+    category: "DATA / AI",
     status: "SHIPPED",
     year: "2026",
-    role: "LEAD DEVELOPER",
-    summary: "A high-impact digital experience built around clarity, motion, and fast interaction.",
-    problem: "A high-impact digital experience needed clarity, motion, and fast interaction across every touchpoint.",
-    solution: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    result: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    stack: ["NEXT.JS", "TYPESCRIPT", "MOTION"],
-    accent: "red",
+    role: "FULL-STACK DEVELOPER / AI ENGINEER",
+    summary: "AI-assisted price intelligence platform scraping Tokopedia, Shopee, and Facebook Marketplace to evaluate if PC/laptop listings are worth buying.",
+    problem: "Consumers struggle to evaluate fair market value across fragmented marketplaces, risking overpaying or purchasing underpowered hardware with deceptive pricing.",
+    solution: "Developed a multi-platform price scraper with Python and Axios paired with a hardware evaluation engine. It cross-references component performance against live price distributions, computing value scores and clear buy/skip recommendations via a responsive Next.js and Supabase interface.",
+    result: "Delivers data-driven purchase recommendations in seconds, slashes pre-purchase research time from hours to minutes, and gives buyers transparent bargaining leverage.",
+    stack: ["NEXT.JS", "TYPESCRIPT", "PYTHON", "SUPABASE", "TAILWIND CSS", "VERCEL"],
+    accent: "green",
     position: { left: "64%", top: "30%" },
+    featured: true,
+    demoUrl: "https://worthgabang-hv6x0qn8n-mooix.vercel.app",
+    repoUrl: "https://github.com/WildaGhoniyuJiddan/WorthGaBang",
   },
   {
     id: "signal-beta",
@@ -159,10 +164,10 @@ const projects: Project[] = [
 ];
 
 const experience = [
-  { year: "2026", code: "LOG.008", title: "EVENT LANDING CMS", role: "ARCHITECT / FULL-STACK", copy: "Architected a PHP 8 + MySQL CMS that lets non-technical staff ship landing pages in minutes — generate-on-save with atomic folder swap, multi-slug routing, and per-event tracking.", tag: "SHIPPED" },
-  { year: "2026", code: "LOG.007", title: "AI ROUTING SYSTEM", role: "AI ENGINEER", copy: "Engineered a delay-risk prediction pipeline (FastAPI + XGBoost + SHAP + LLM) with explainable outputs for COMPFEST 18 — turning raw routes into risk scores.", tag: "COMPFEST" },
-  { year: "2025", code: "LOG.006", title: "DESIGN SYSTEM PROTOCOL", role: "UI ENGINEER", copy: "Pioneered a reusable design-token workflow that cut UI rework and kept visual language consistent across landing pages.", tag: "SHIPPED" },
-  { year: "2025", code: "LOG.005", title: "WEB EXPERIENCE PROGRAM", role: "FRONTEND DEVELOPER", copy: "Built interactive web experiences with motion, sound, and responsive layouts — from concept to production.", tag: "SHIPPED" },
+  { year: "2026", code: "LOG.008", title: "WORL — AI WORTH-IT CHECKER", role: "FULL-STACK / AI ENGINEER", copy: "Engineered an AI price-intelligence platform scraping marketplaces to evaluate laptop/PC value against hardware market baselines.", tag: "SHIPPED" },
+  { year: "2025", code: "LOG.007", title: "LAMAN-YP — EVENT CMS", role: "FULL-STACK DEVELOPER", copy: "Architected a native PHP 8 + MySQL CMS with automated static generation, non-blocking click tracking, and admin asset management.", tag: "SHIPPED" },
+  { year: "2025", code: "LOG.006", title: "AI ROUTING SYSTEM", role: "AI ENGINEER", copy: "Engineered a delay-risk prediction pipeline (FastAPI + XGBoost + SHAP + LLM) with explainable outputs for COMPFEST 18 — turning raw routes into risk scores.", tag: "COMPFEST" },
+  { year: "2025", code: "LOG.005", title: "DESIGN SYSTEM PROTOCOL", role: "UI ENGINEER", copy: "Pioneered a reusable design-token workflow that cut UI rework and kept visual language consistent across landing pages.", tag: "SHIPPED" },
   { year: "2024", code: "LOG.004", title: "FIRST SIGNAL DETECTED", role: "DEVELOPER", copy: "Started the journey — learning to build for the web and turning curiosity into shipped products.", tag: "ARCHIVE" },
 ];
 
@@ -695,7 +700,7 @@ export default function Home() {
               <article className="featured-build">
                 <div className="featured-media">
                   <div className="featured-crosshair"><Crosshair /><span>LOCKED</span></div>
-                  <div className="media-caption"><span>LIVE PREVIEW // 001</span><b>PROJECT ALPHA</b></div>
+                  <div className="media-caption"><span>LIVE PREVIEW // 001</span><b>{projects[0].title}</b></div>
                 </div>
                 <div className="featured-data">
                   <div className="featured-meta"><span>{projects[0].year}</span><span>{projects[0].role}</span><span>{projects[0].status}</span></div>
@@ -704,7 +709,13 @@ export default function Home() {
                   <ul>{projects[0].stack.map((item) => <li key={item}><Check /> {item}</li>)}</ul>
                   <div className="featured-actions">
                     <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0])}>READ CASE STUDY</button>
-                    <button className="pixel-button" onClick={() => playCue("click")}>LIVE DEMO <ExternalLink /></button>
+                    {projects[0].demoUrl ? (
+                      <a href={projects[0].demoUrl} target="_blank" rel="noopener noreferrer" className="pixel-button" style={{ display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }} onClick={() => playCue("click")}>
+                        LIVE DEMO <ExternalLink size={14} />
+                      </a>
+                    ) : (
+                      <button className="pixel-button" onClick={() => openProject(projects[0])}>INSPECT SIGNAL <Crosshair size={14} /></button>
+                    )}
                   </div>
                 </div>
               </article>
@@ -886,8 +897,45 @@ export default function Home() {
               <section><span>02 / THE RESPONSE</span><p>{selectedProject.solution}</p></section>
               <section><span>03 / THE OUTCOME</span><p>{selectedProject.result}</p></section>
               <div className="drawer-stack">{selectedProject.stack.map((item) => <span key={item}>{item}</span>)}</div>
-              <div className="drawer-actions"><button className="pixel-button pixel-button--red">LIVE DEMO <ExternalLink /></button><button className="pixel-button">SOURCE <GitBranch /></button></div>
-              <small>Links are placeholders until portfolio owner supplies verified URLs.</small>
+              <div className="drawer-actions">
+                {selectedProject.demoUrl ? (
+                  <a
+                    href={selectedProject.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pixel-button pixel-button--red"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
+                    onClick={() => playCue("click")}
+                  >
+                    LIVE DEMO <ExternalLink size={14} />
+                  </a>
+                ) : (
+                  <button className="pixel-button" disabled style={{ opacity: 0.6, cursor: "not-allowed" }}>
+                    INTERNAL SYSTEM
+                  </button>
+                )}
+                {selectedProject.repoUrl ? (
+                  <a
+                    href={selectedProject.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pixel-button"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
+                    onClick={() => playCue("click")}
+                  >
+                    SOURCE <GitBranch size={14} />
+                  </a>
+                ) : (
+                  <button className="pixel-button" disabled style={{ opacity: 0.6, cursor: "not-allowed" }}>
+                    PRIVATE REPO
+                  </button>
+                )}
+              </div>
+              <small>
+                {selectedProject.demoUrl || selectedProject.repoUrl
+                  ? "Direct project links verified and active."
+                  : "Enterprise internal system or private source repository."}
+              </small>
             </div>
           </aside>
         </div>
