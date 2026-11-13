@@ -10,3 +10,4 @@ dist/
 *.tsbuildinfo
 assets/images/spider-logo.svg
 .hermes/
+static/

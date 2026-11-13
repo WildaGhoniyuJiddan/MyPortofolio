@@ -36,9 +36,14 @@ import {
   Zap,
 } from "lucide-react";
 import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import ScrollEngine from "./scroll-engine";
+import HeroScroll from "./hero-scroll";
+import RouteScroll from "./route-scroll";
+import LogFocus from "./log-focus";
+import StickyCta from "./sticky-cta";
 
 type ProjectStatus = "SHIPPED" | "PROTOTYPE" | "IN PROGRESS" | "COLLABORATION";
-type ProjectCategory = "FRONTEND" | "BACKEND" | "DATA / AI" | "DESIGN";
+type ProjectCategory = "MOBILE" | "FRONTEND" | "BACKEND" | "DATA / AI" | "DESIGN" | "UI/UX";
 
 type Project = {
   id: string;
@@ -53,71 +58,138 @@ type Project = {
   solution: string;
   result: string;
   stack: string[];
-  accent: "red" | "cyan" | "green" | "amber";
   position: { left: string; top: string };
   featured?: boolean;
   demoUrl?: string;
   repoUrl?: string;
 };
 
+// Featured signals — synced to the final CV (Nov 2026), order fixed by plan.
 const projects: Project[] = [
   {
-    id: "laman-yp",
+    id: "worthbang-android",
     signal: "SIG.001",
-    title: "LAMAN-YP",
-    category: "BACKEND",
+    title: "WORTHBANG ANDROID",
+    category: "MOBILE",
     status: "SHIPPED",
     year: "2026",
-    role: "FULL-STACK DEVELOPER",
-    summary: "Event landing CMS — native PHP 8 & MySQL with automated static generation, non-blocking click tracking, and an intuitive admin panel.",
-    problem: "Creating event landing pages manually was slow and required developer intervention, while campaign teams lacked an integrated way to track CTA click analytics per event.",
-    solution: "Architected a generate-on-save CMS: admin manages event data and uploads assets with GD/Fileinfo validation, which compiles into static minified HTML with atomic swapping. Built a non-blocking beacon API for real-time click tracking and pixel configuration without impacting page speed.",
-    result: "Reduced landing page turnaround time from days to minutes, delivered instant click telemetry, and enabled non-technical staff to safely launch production-ready pages.",
-    stack: ["PHP 8", "MYSQL", "APACHE", "GD / FILEINFO", "HTML/CSS/JS"],
-    accent: "cyan",
+    role: "MOBILE DEVELOPER",
+    summary: "Android app that judges whether a PC component is worth buying — Flutter & Dart client, FastAPI + Supabase backend, and a catalogue of 4,500+ components.",
+    problem: "PC builders in Indonesia struggle to judge fair component prices against fragmented marketplace listings, risking overpaying for underpowered hardware.",
+    solution: "Built a Flutter & Dart Android app backed by FastAPI and Supabase: catalogue of 4,500+ components, worth-it evaluation flow, and AI-assisted guidance scoped to build decisions.",
+    result: "Shipped as a complete Android product — catalogue, evaluation, and assistant in one app — serving as the primary featured build of this portfolio.",
+    stack: ["FLUTTER", "DART", "FASTAPI", "SUPABASE"],
     position: { left: "32%", top: "42%" },
     featured: true,
   },
   {
-    id: "worl",
+    id: "tembusin-landing",
     signal: "SIG.002",
-    title: "WorL — AI WORTH-IT CHECKER",
+    title: "LANDING PAGE KOMPETISI TEMBUSIN",
+    category: "FRONTEND",
+    status: "SHIPPED",
+    year: "2026",
+    role: "SOFTWARE ENGINEER (MAGANG)",
+    summary: "Competition landing page for TEMBUSIN (CV Prestasi Anak Bangsa) — PageSpeed 95+ and 1,000+ prospective participants reached.",
+    problem: "TEMBUSIN needed a competition landing page that loads instantly for campaign traffic while staying easy for non-technical staff to update.",
+    solution: "Built the page with PHP, JavaScript, HTML5, and CSS3, tuned assets and rendering until it passed PageSpeed 95+, and shipped it inside the business-unit CMS workflow.",
+    result: "PageSpeed 95+ in production, 1,000+ prospective participants reached, and publication time cut significantly for the campaign team.",
+    stack: ["PHP", "JAVASCRIPT", "HTML5", "CSS3"],
+    position: { left: "68%", top: "42%" },
+    featured: true,
+    demoUrl: "https://yapresindo.com",
+  },
+  {
+    id: "tembusin-utm",
+    signal: "SIG.003",
+    title: "DASHBOARD ANALITIK & PELACAKAN UTM",
     category: "DATA / AI",
     status: "SHIPPED",
     year: "2026",
-    role: "FULL-STACK DEVELOPER / AI ENGINEER",
-    summary: "AI-assisted price intelligence platform scraping Tokopedia, Shopee, and Facebook Marketplace to evaluate if PC/laptop listings are worth buying.",
-    problem: "Consumers struggle to evaluate fair market value across fragmented marketplaces, risking overpaying or purchasing underpowered hardware with deceptive pricing.",
-    solution: "Developed a multi-platform price scraper with Python and Axios paired with a hardware evaluation engine. It cross-references component performance against live price distributions, computing value scores and clear buy/skip recommendations via a responsive Next.js and Supabase interface.",
-    result: "Delivers data-driven purchase recommendations in seconds, slashes pre-purchase research time from hours to minutes, and gives buyers transparent bargaining leverage.",
-    stack: ["NEXT.JS", "TYPESCRIPT", "PYTHON", "SUPABASE", "TAILWIND CSS", "VERCEL"],
-    accent: "green",
-    position: { left: "68%", top: "42%" },
+    role: "SOFTWARE ENGINEER (MAGANG)",
+    summary: "Analytics dashboard with UTM tracking for TEMBUSIN — campaign traffic and participant sources in one operational view.",
+    problem: "Campaign results were scattered across links and platforms, so the team could not tell which channels actually delivered participants.",
+    solution: "Built an analytics dashboard fed by UTM-tagged links: traffic sources, campaign performance, and participant flow consolidated into a single view for the team.",
+    result: "Channel performance became visible at a glance, letting the team shift effort to the sources that actually convert.",
+    stack: ["PHP", "JAVASCRIPT", "UTM TRACKING", "DATA VISUALIZATION"],
+    position: { left: "50%", top: "68%" },
     featured: true,
-    demoUrl: "https://worthgabang-hv6x0qn8n-mooix.vercel.app",
-    repoUrl: "https://github.com/WildaGhoniyuJiddan/WorthGaBang",
+  },
+  {
+    id: "tembusin-websites",
+    signal: "SIG.004",
+    title: "WEBSITE RESMI TEMBUSIN",
+    category: "FRONTEND",
+    status: "SHIPPED",
+    year: "2026",
+    role: "SOFTWARE ENGINEER (MAGANG)",
+    summary: "Official company websites for TEMBUSIN business units — yapresindo.com and braindicator.com, both live in production.",
+    problem: "Business units under CV Prestasi Anak Bangsa needed official, trustworthy web presences instead of scattered social profiles.",
+    solution: "Designed and shipped the official websites for the units — yapresindo.com and braindicator.com — as production sites maintained through the shared CMS covering 4 business units.",
+    result: "Two official websites live in production (yapresindo.com, braindicator.com), giving each business unit a credible public home.",
+    stack: ["PHP", "JAVASCRIPT", "HTML5", "CSS3"],
+    position: { left: "18%", top: "66%" },
+    featured: true,
+    demoUrl: "https://braindicator.com",
   },
 ];
 
+// Campus work — deliberately kept apart from the featured/professional signals.
+const campusProjects: Project[] = [
+  {
+    id: "pramana",
+    signal: "KUL.001",
+    title: "PRAMANA",
+    category: "DATA / AI",
+    status: "COLLABORATION",
+    year: "2026",
+    role: "FULL-STACK & AI ARCHITECTURE",
+    summary: "AI platform for Bali tourism legal-compliance guidance — a strict grounded-RAG system over verified Balinese regulations, built for Bali DigiFest 2026.",
+    problem: "Tourism actors in Bali face scattered, hard-to-read regulations, while generic AI answers risk inventing legal claims.",
+    solution: "Built a Svelte + FastAPI platform on Gemini with a verified JDIH Bali corpus and tiered epistemic routing: the model may speak, but claims and citations stay locked to verified evidence.",
+    result: "Entered for Bali DigiFest 2026 with a working grounded-RAG prototype — legal answers cite real regulations or abstain.",
+    stack: ["SVELTE", "FASTAPI", "GEMINI", "RAG"],
+    position: { left: "82%", top: "66%" },
+  },
+  {
+    id: "mamas",
+    signal: "KUL.002",
+    title: "MAMAS",
+    category: "UI/UX",
+    status: "PROTOTYPE",
+    year: "2026",
+    role: "UI/UX DESIGNER",
+    summary: "UI/UX concept for an app that entrusts pickup of new-student attributes — queue, verification codes, and hand-over flow designed end to end.",
+    problem: "New students queue chaotically to collect their attributes in person, with no way to safely delegate pickup to someone else.",
+    solution: "Designed the full flow as a course final project (Desain Pengalaman Pengguna): entrusted pickup requests, meeting points, verification codes, and hand-over confirmation in a high-fidelity prototype.",
+    result: "Complete UI/UX case study — research, flows, and interactive high-fidelity prototype delivered as the course final project.",
+    stack: ["FIGMA", "UX RESEARCH", "PROTOTYPING"],
+    position: { left: "64%", top: "20%" },
+  },
+];
+
+const allProjects: Project[] = [...projects, ...campusProjects];
+
 const experience = [
-  { year: "2026", code: "LOG.008", title: "WORL — AI WORTH-IT CHECKER", role: "FULL-STACK / AI ENGINEER", copy: "Engineered an AI price-intelligence platform scraping marketplaces to evaluate laptop/PC value against hardware market baselines.", tag: "SHIPPED" },
-  { year: "2026", code: "LOG.007", title: "LAMAN-YP — EVENT CMS", role: "FULL-STACK DEVELOPER", copy: "Architected a native PHP 8 + MySQL CMS with automated static generation, non-blocking click tracking, and admin asset management.", tag: "SHIPPED" },
-  { year: "2025", code: "LOG.006", title: "AI ROUTING SYSTEM", role: "AI ENGINEER", copy: "Engineered a delay-risk prediction pipeline (FastAPI + XGBoost + SHAP + LLM) with explainable outputs for COMPFEST 18 — turning raw routes into risk scores.", tag: "COMPFEST" },
-  { year: "2025", code: "LOG.005", title: "DESIGN SYSTEM PROTOCOL", role: "UI ENGINEER", copy: "Pioneered a reusable design-token workflow that cut UI rework and kept visual language consistent across landing pages.", tag: "SHIPPED" },
+  { year: "JUL–AGU 2026", code: "LOG.001", title: "SOFTWARE ENGINEER (MAGANG)", role: "CV PRESTASI ANAK BANGSA (TEMBUSIN) — BANJARNEGARA", copy: "Built and maintained web systems across 4 business units through one CMS: the competition landing page (PageSpeed 95+, 1,000+ prospective participants), an analytics & UTM tracking dashboard, and the official unit websites yapresindo.com and braindicator.com.", tag: "MAGANG" },
+  { year: "2025", code: "LOG.002", title: "STAFF PDD — PKK-SI 2025", role: "UPN \"VETERAN\" YOGYAKARTA", copy: "Publication, decoration, and documentation staff for the Sistem Informasi student orientation (PKK-SI 2025).", tag: "ORGANISASI" },
+  { year: "2026", code: "LOG.003", title: "PESERTA NASIONAL DATATHON", role: "RISTEK FASILKOM UI X OPENAI", copy: "Competed at national level in the Datathon organised by RISTEK Fasilkom UI with OpenAI (2026).", tag: "KOMPETISI" },
   { year: "2024", code: "LOG.004", title: "FIRST SIGNAL DETECTED", role: "DEVELOPER", copy: "Started the journey — learning to build for the web and turning curiosity into shipped products.", tag: "ARCHIVE" },
 ];
 
 const skillGroups = [
-  { id: "frontend", title: "FRONTEND SYSTEMS", icon: Code2, color: "cyan", skills: ["React / Next.js", "TypeScript", "Motion & Canvas", "Responsive UI"] },
-  { id: "backend", title: "BACKEND SIGNAL", icon: Database, color: "green", skills: ["Node.js / PHP", "REST APIs", "MySQL / PostgreSQL", "Auth & Security"] },
-  { id: "data", title: "DATA INTELLIGENCE", icon: Zap, color: "amber", skills: ["Python / FastAPI", "Machine Learning", "Analytics", "Explainability"] },
-  { id: "design", title: "INTERFACE DESIGN", icon: Palette, color: "red", skills: ["Design Systems", "Figma", "Interaction Design", "Accessibility"] },
+  { id: "frontend", title: "FRONTEND SYSTEMS", icon: Code2, color: "cyan", skills: ["HTML5 / CSS3", "JavaScript / TypeScript", "Next.js", "Responsive UI"] },
+  { id: "mobile", title: "MOBILE DEVELOPMENT", icon: Zap, color: "cyan", skills: ["Flutter", "Dart", "Android", "Material UI"] },
+  { id: "data", title: "DATA & BACKEND", icon: Database, color: "cyan", skills: ["Python / FastAPI", "PHP / MySQL", "Supabase / PostgreSQL", "REST APIs"] },
+  { id: "tools", title: "TOOLS & METODE", icon: Palette, color: "cyan", skills: ["Git / GitHub", "Figma", "UTM Analytics", "Design Systems"] },
 ];
 
 const archiveItems = [
   { index: "01", type: "EXPERIMENT", title: "SIGNAL VISUALIZER", copy: "A canvas-based signal visualizer exploring motion and audio feedback.", meta: "CANVAS / AUDIO", color: "cyan" },
-  { index: "02", type: "CASE NOTE", title: "MOTION AS FEEDBACK", copy: "Why motion belongs in interfaces — and how feedback loops make software feel alive.", meta: "ARTICLE / 08 MIN", color: "red" },
-  { index: "03", type: "PROTOTYPE", title: "RADAR UI STUDY", copy: "A radar-inspired interface study pushing density and readability to the edge.", meta: "INTERACTIVE DEMO", color: "green" },
+  { index: "02", type: "CASE NOTE", title: "MOTION AS FEEDBACK", copy: "Why motion belongs in interfaces — and how feedback loops make software feel alive.", meta: "ARTICLE / 08 MIN", color: "cyan" },
+  { index: "03", type: "PROTOTYPE", title: "RADAR UI STUDY", copy: "A radar-inspired interface study pushing density and readability to the edge.", meta: "INTERACTIVE DEMO", color: "cyan" },
+  { index: "04", type: "CREDENTIAL", title: "DATATHON RISTEK FASILKOM UI x OPENAI", copy: "National-level datathon participant — data, models, and a ticking clock, against teams from across Indonesia.", meta: "NATIONAL PARTICIPANT / 2026", color: "cyan" },
+  { index: "05", type: "CREDENTIAL", title: "GEMINI CERTIFIED EDUCATOR", copy: "Google for Education certification for applied AI in learning — Gemini, verified and on record.", meta: "GOOGLE FOR EDUCATION / THRU 2029", color: "cyan" },
 ];
 
 const navItems = [
@@ -130,7 +202,7 @@ const navItems = [
   { id: "contact", label: "CONTACT", icon: Radio },
 ];
 
-const categories = ["ALL", "BACKEND", "DATA / AI"] as const;
+const categories = ["ALL", "MOBILE", "FRONTEND", "DATA / AI"] as const;
 
 function MaskIcon({ compact = false }: { compact?: boolean }) {
   return (
@@ -174,7 +246,6 @@ function AmbientNetwork() {
     if (!context) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let frame = 0;
     let width = 0;
     let height = 0;
     let raf = 0;
@@ -219,15 +290,43 @@ function AmbientNetwork() {
           }
         });
       });
-      frame += 1;
-      if (!reduced && frame < Number.MAX_SAFE_INTEGER) raf = requestAnimationFrame(draw);
+      if (shouldRun()) raf = requestAnimationFrame(draw);
+      else raf = 0;
     };
+
+    // Fase 4 audit: pause the loop while the canvas is off-screen or the
+    // tab is hidden. The canvas is position:fixed (always intersecting),
+    // so the visibilitychange half is what actually saves cycles today.
+    let inView = true;
+    let tabVisible = !document.hidden;
+    const shouldRun = () => !reduced && inView && tabVisible;
+    const wake = () => {
+      if (shouldRun() && !raf) raf = requestAnimationFrame(draw);
+    };
+    const stop = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+    };
+    const viewObserver = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) wake();
+      else stop();
+    });
+    viewObserver.observe(canvas);
+    const onVisibility = () => {
+      tabVisible = !document.hidden;
+      if (tabVisible) wake();
+      else stop();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     resize();
     draw();
     window.addEventListener("resize", resize);
     return () => {
       cancelAnimationFrame(raf);
+      viewObserver.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
     };
   }, []);
@@ -237,10 +336,13 @@ function AmbientNetwork() {
 
 export default function Home() {
   const [booting, setBooting] = useState(true);
+  const [bootFull, setBootFull] = useState(true);
+  const [bootLeaving, setBootLeaving] = useState(false);
   const [briefing, setBriefing] = useState(true);
   const [mobileNav, setMobileNav] = useState(false);
   const [activeSection, setActiveSection] = useState("command-center");
   const [selectedProject, setSelectedProject] = useState<Project>(projects[0]);
+  const [drawerList, setDrawerList] = useState<Project[]>(projects);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [projectFilter, setProjectFilter] = useState<(typeof categories)[number]>("ALL");
   const [skillGroup, setSkillGroup] = useState(skillGroups[0].id);
@@ -254,12 +356,18 @@ export default function Home() {
   ]);
   const [contactStatus, setContactStatus] = useState("");
   const [copied, setCopied] = useState(false);
+  const [fannedArchive, setFannedArchive] = useState<string | null>(null);
+  const [slinger, setSlinger] = useState<"full" | "label" | null>(null);
   const [clock, setClock] = useState("00:00:00");
   const [loadingLabel, setLoadingLabel] = useState("");
   const audioContext = useRef<AudioContext | null>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
   const terminalField = useRef<HTMLInputElement>(null);
   const loadingTimer = useRef<number | null>(null);
+  const slingerTimer = useRef<number | null>(null);
+  const railRef = useRef<HTMLElement | null>(null);
+  const railButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [railMark, setRailMark] = useState({ top: 0, height: 0, ready: false });
 
   const filteredProjects = useMemo(
     () => projectFilter === "ALL" ? projects : projects.filter((project) => project.category === projectFilter),
@@ -272,8 +380,39 @@ export default function Home() {
     return experience.filter((item) => `${item.year} ${item.title} ${item.role} ${item.copy} ${item.tag}`.toLowerCase().includes(query));
   }, [logQuery]);
 
+  // Fase 2 boot: full fade-from-black with a thin cyan progress line only on
+  // the first visit of a session; later visits in the same session get a
+  // short fade. Always skippable with any click/tap/key.
   useEffect(() => {
-    const bootTimer = window.setTimeout(() => setBooting(false), 1750);
+    let finished = false;
+    let doneTimer = 0;
+    let holdTimer = 0;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      window.sessionStorage.setItem("portfolio_boot_seen", "true");
+      window.removeEventListener("pointerdown", finish);
+      window.removeEventListener("keydown", finish);
+      setBootLeaving(true);
+      doneTimer = window.setTimeout(() => setBooting(false), 380);
+    };
+    const startTimer = window.setTimeout(() => {
+      const full = window.sessionStorage.getItem("portfolio_boot_seen") !== "true";
+      setBootFull(full);
+      holdTimer = window.setTimeout(finish, full ? 1450 : 300);
+    }, 0);
+    window.addEventListener("pointerdown", finish);
+    window.addEventListener("keydown", finish);
+    return () => {
+      window.clearTimeout(startTimer);
+      window.clearTimeout(holdTimer);
+      window.clearTimeout(doneTimer);
+      window.removeEventListener("pointerdown", finish);
+      window.removeEventListener("keydown", finish);
+    };
+  }, []);
+
+  useEffect(() => {
     const preferenceTimer = window.setTimeout(() => {
       setSoundEnabled(window.localStorage.getItem("portfolio_sound_enabled") === "true");
       setBriefing(window.sessionStorage.getItem("portfolio_briefing_seen") !== "true");
@@ -282,7 +421,6 @@ export default function Home() {
     tick();
     const timer = window.setInterval(tick, 1000);
     return () => {
-      window.clearTimeout(bootTimer);
       window.clearTimeout(preferenceTimer);
       window.clearInterval(timer);
       if (loadingTimer.current !== null) window.clearTimeout(loadingTimer.current);
@@ -332,6 +470,28 @@ export default function Home() {
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
+
+  // Fase 2: moving rail indicator — measures the active rail button and lets
+  // the cyan marker glide to it (CSS transition on transform/height).
+  useEffect(() => {
+    const measure = () => {
+      const rail = railRef.current;
+      const button = railButtonRefs.current[activeSection];
+      if (!rail || !button) {
+        setRailMark((mark) => ({ ...mark, ready: false }));
+        return;
+      }
+      const railBox = rail.getBoundingClientRect();
+      const buttonBox = button.getBoundingClientRect();
+      setRailMark({ top: buttonBox.top - railBox.top, height: buttonBox.height, ready: true });
+    };
+    const frame = window.requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", measure);
+    };
+  }, [activeSection, mobileNav, booting]);
 
   useEffect(() => {
     const onKey = (event: globalThis.KeyboardEvent) => {
@@ -409,6 +569,20 @@ export default function Home() {
     }, duration);
   };
 
+  // Fase 4 easter egg (Keputusan 8): one ~1.6s web-slinger burst on the
+  // operator portrait. Re-clicks while active are ignored (no stacking);
+  // under reduced motion only the label shows, no web sweep.
+  const triggerSlinger = () => {
+    if (slinger) return;
+    playCue("ping");
+    setSlinger(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "label" : "full");
+    if (slingerTimer.current !== null) window.clearTimeout(slingerTimer.current);
+    slingerTimer.current = window.setTimeout(() => {
+      setSlinger(null);
+      slingerTimer.current = null;
+    }, 1600);
+  };
+
   const navigateTo = (id: string) => {
     playCue("click");
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -416,9 +590,10 @@ export default function Home() {
     setMobileNav(false);
   };
 
-  const openProject = (project: Project) => {
+  const openProject = (project: Project, list: Project[]) => {
     lastFocus.current = document.activeElement as HTMLElement;
     runLoading("DECODING PROJECT SIGNAL", () => {
+      setDrawerList(list);
       setSelectedProject(project);
       setDrawerOpen(true);
       playCue("ping");
@@ -443,16 +618,16 @@ export default function Home() {
   };
 
   const nextProject = () => {
-    const currentIndex = projects.findIndex((p) => p.id === selectedProject.id);
-    const nextIndex = (currentIndex + 1) % projects.length;
-    setSelectedProject(projects[nextIndex]);
+    const currentIndex = drawerList.findIndex((p) => p.id === selectedProject.id);
+    const nextIndex = (currentIndex + 1) % drawerList.length;
+    setSelectedProject(drawerList[nextIndex]);
     playCue("ping");
   };
 
   const prevProject = () => {
-    const currentIndex = projects.findIndex((p) => p.id === selectedProject.id);
-    const prevIndex = (currentIndex - 1 + projects.length) % projects.length;
-    setSelectedProject(projects[prevIndex]);
+    const currentIndex = drawerList.findIndex((p) => p.id === selectedProject.id);
+    const prevIndex = (currentIndex - 1 + drawerList.length) % drawerList.length;
+    setSelectedProject(drawerList[prevIndex]);
     playCue("ping");
   };
 
@@ -463,8 +638,8 @@ export default function Home() {
     const [command, ...args] = raw.toLowerCase().split(/\s+/);
     const responses: Record<string, string> = {
       help: "COMMANDS: scan, list, open <id>, filter <category>, about, contact, sound on|off, clear, exit",
-      scan: `${projects.length} PROJECT SIGNALS DETECTED. ${projects.filter((project) => project.status === "SHIPPED").length} SHIPPED.`,
-      list: projects.map((project) => `${project.signal}:${project.title}`).join(" // "),
+      scan: `${allProjects.length} PROJECT SIGNALS DETECTED. ${projects.filter((project) => project.status === "SHIPPED").length} FEATURED SHIPPED. ${campusProjects.length} PROYEK KULIAH.`,
+      list: allProjects.map((project) => `${project.signal}:${project.title}`).join(" // "),
       about: "OPERATOR PROFILE AVAILABLE AT PANEL: IDENTITY SIGNAL.",
       contact: "OPENING SECURE CONTACT CHANNEL...",
     };
@@ -498,9 +673,9 @@ export default function Home() {
       } else response = `FILTER NOT FOUND. USE: ${categories.join(", ")}.`;
     }
     if (command === "open") {
-      const project = projects.find((item) => item.id.includes(args[0] ?? ""));
+      const project = allProjects.find((item) => item.id.includes(args[0] ?? ""));
       if (project && args[0]) {
-        openProject(project);
+        openProject(project, allProjects);
         response = `OPENING ${project.title}.`;
       } else response = "PROJECT NOT FOUND. USE 'list' TO VIEW SIGNALS.";
     }
@@ -528,14 +703,21 @@ export default function Home() {
 
   return (
     <main className="app-shell" aria-busy={booting || Boolean(loadingLabel)}>
+      <ScrollEngine />
+      <HeroScroll />
+      <RouteScroll />
+      <LogFocus />
       <AmbientNetwork />
       <div className="ambient-grid" aria-hidden="true" />
 
       {booting && (
-        <section className="boot-loader" role="status" aria-live="polite" aria-label="Loading portfolio network">
-          <div className="boot-loader__scan" aria-hidden="true" />
-          <WebLoader label="WEAVING PORTFOLIO NETWORK" />
-          <div className="boot-loader__coordinates" aria-hidden="true"><span>NODE 08</span><span>SECTOR NYC-616</span><span>SYNC 100%</span></div>
+        <section className={`boot-loader ${bootLeaving ? "is-leaving" : ""}`} role="status" aria-live="polite" aria-label="Loading portfolio network">
+          <div className="boot-loader__inner">
+            <span className="boot-loader__kicker">PORTFOLIO // SIGNAL NETWORK</span>
+            <b className="boot-loader__label">{bootFull ? "ESTABLISHING UPLINK" : "RESUMING SESSION"}</b>
+            <div className="boot-loader__bar" aria-hidden="true"><i style={{ animationDuration: bootFull ? "1.45s" : "0.3s" }} /></div>
+            <small className="boot-loader__hint">CLICK / TAP / ANY KEY TO SKIP</small>
+          </div>
         </section>
       )}
 
@@ -559,12 +741,15 @@ export default function Home() {
         </header>
 
         <div className="workspace">
-          <nav className={`command-rail ${mobileNav ? "is-open" : ""}`} aria-label="Primary navigation">
+          <nav ref={railRef} className={`command-rail ${mobileNav ? "is-open" : ""}`} aria-label="Primary navigation">
+            {railMark.ready && (
+              <span className="rail-indicator" style={{ transform: `translateY(${railMark.top}px)`, height: railMark.height }} aria-hidden="true" />
+            )}
             <button className="rail-close mobile-only" onClick={() => setMobileNav(false)} aria-label="Close navigation"><X /></button>
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
-                <button key={item.id} className={`rail-button ${activeSection === item.id ? "is-active" : ""}`} onClick={() => navigateTo(item.id)} aria-label={item.label} aria-current={activeSection === item.id ? "page" : undefined}>
+                <button key={item.id} ref={(el) => { railButtonRefs.current[item.id] = el; }} className={`rail-button ${activeSection === item.id ? "is-active" : ""}`} onClick={() => navigateTo(item.id)} aria-label={item.label} aria-current={activeSection === item.id ? "page" : undefined}>
                   <Icon /><span>{item.label}</span>
                 </button>
               );
@@ -574,16 +759,26 @@ export default function Home() {
 
           <div className="page-scroll">
             <section id="command-center" className="page-section command-center" aria-labelledby="home-title">
-              <div className="map-copy reveal">
-                <span className="eyebrow">OPERATOR ID // AVAILABLE FOR WORK</span>
-                <h1 id="home-title">WILDA GHONIYU JIDDAN<br /><em>IT SPECIALIST</em></h1>
-                <p>Building expressive interfaces and dependable digital systems — from event landing platforms to AI-powered routing.</p>
-                <div className="hero-actions">
-                  <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0])}>VIEW FEATURED BUILD</button>
-                  <button className="pixel-button" onClick={scanProjects}>SCAN PROJECTS</button>
+              <div className="hero-stage">
+                <div className="hero-layer hero-layer--sky" aria-hidden="true" />
+                <div className="hero-layer hero-layer--skyline" aria-hidden="true" />
+                <div className="map-copy reveal">
+                  <div className="hero-drift">
+                    <span className="eyebrow">OPERATOR ID // PORTFOLIO SIGNAL NETWORK</span>
+                    <h1 id="home-title">WILDA GHONIYU JIDDAN<br /><em>IT SPECIALIST</em></h1>
+                    <p>Building expressive interfaces and dependable digital systems — from Android apps to production websites for real business units.</p>
+                    <div className="hero-scan" aria-hidden="true">
+                      <span className="hero-scan__line hero-scan__line--scanning">SCANNING SIGNAL FIELD…</span>
+                      <span className="hero-scan__line hero-scan__line--locked">SIGNAL LOCKED // OPERATOR IDENTIFIED</span>
+                      <span className="hero-scan__bar"><i className="hero-scan__fill" /></span>
+                    </div>
+                    <div className="hero-actions">
+                      <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0], projects)}>VIEW FEATURED BUILD</button>
+                      <button className="pixel-button" onClick={scanProjects}>SCAN PROJECTS</button>
+                    </div>
+                    <button className="scroll-hint" onClick={() => navigateTo("identity")}><ArrowDown /> SCROLL TO DECODE</button>
+                  </div>
                 </div>
-                <button className="scroll-hint" onClick={() => navigateTo("identity")}><ArrowDown /> SCROLL TO DECODE</button>
-              </div>
 
               <div className="map-field" aria-label="Project signal map">
                 <div className="radar-sweep" aria-hidden="true" />
@@ -591,32 +786,35 @@ export default function Home() {
                 {projects.map((project) => (
                   <button
                     key={project.id}
-                    className={`signal signal--${project.accent} ${selectedProject.id === project.id ? "is-selected" : ""}`}
+                    className={`signal ${selectedProject.id === project.id ? "is-selected" : ""}`}
                     style={project.position}
                     onMouseEnter={() => setSelectedProject(project)}
                     onFocus={() => setSelectedProject(project)}
-                    onClick={() => openProject(project)}
+                    onClick={() => openProject(project, projects)}
                     aria-label={`Open ${project.title}`}
                   ><span /><b>{project.title}</b></button>
                 ))}
               </div>
 
-              <aside className="signal-card reveal reveal--delay" aria-live="polite">
-                <div className="signal-card__top"><span className="card-index">{selectedProject.signal}</span><span className={`status-dot status-dot--${selectedProject.accent}`}>{selectedProject.status}</span></div>
-                <h2>{selectedProject.title}</h2>
-                <p>{selectedProject.summary}</p>
-                <div className="tag-row">{selectedProject.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                <div className="signal-card__bottom">
-                  <button className="text-link" onClick={() => openProject(selectedProject)}>OPEN CASE FILE <ExternalLink /></button>
-                  <div className="signal-cycler">
-                    <button type="button" onClick={prevProject} aria-label="Previous project signal" title="Previous signal">◀</button>
-                    <span>{projects.findIndex((p) => p.id === selectedProject.id) + 1} / {projects.length}</span>
-                    <button type="button" onClick={nextProject} aria-label="Next project signal" title="Next signal">▶</button>
+                <aside className="signal-card reveal reveal--delay" aria-live="polite">
+                  <div className="hero-drift">
+                    <div className="signal-card__top"><span className="card-index">{selectedProject.signal}</span><span className="status-dot">{selectedProject.status}</span></div>
+                    <h2>{selectedProject.title}</h2>
+                    <p>{selectedProject.summary}</p>
+                    <div className="tag-row">{selectedProject.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                    <div className="signal-card__bottom">
+                      <button className="text-link" onClick={() => openProject(selectedProject, allProjects)}>OPEN CASE FILE <ExternalLink /></button>
+                      <div className="signal-cycler">
+                        <button type="button" onClick={prevProject} aria-label="Previous project signal" title="Previous signal">◀</button>
+                        <span>{projects.findIndex((p) => p.id === selectedProject.id) + 1} / {projects.length}</span>
+                        <button type="button" onClick={nextProject} aria-label="Next project signal" title="Next signal">▶</button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </aside>
+                </aside>
 
-              <div className="map-coordinates" aria-hidden="true"><span>X 40.7128</span><span>Y −74.0060</span><span>ZOOM 04</span></div>
+                <div className="map-coordinates" aria-hidden="true"><span>X −7.7956</span><span>Y 110.3695</span><span>ZOOM 04</span></div>
+              </div>
             </section>
 
             <section id="identity" className="page-section identity-section" aria-labelledby="identity-title">
@@ -639,16 +837,19 @@ export default function Home() {
                       loading="lazy"
                     />
                     <div className="operator-photo-overlay" aria-hidden="true" />
+                    {slinger === "full" && <div className="slinger-web" aria-hidden="true" />}
+                    {slinger && <span className="slinger-tag" aria-hidden="true">WEB-SLINGER MODE</span>}
+                    <button type="button" className="operator-hit" aria-label="Aktifkan efek web pada foto" onClick={triggerSlinger} />
                     <span className="operator-tag">SIGNAL LOCKED // OPERATOR IDENTIFIED</span>
                   </div>
                   <div className="operator-id"><span>OPERATOR</span><b>WILDA GHONIYU JIDDAN</b><small>FULL-STACK IT SPECIALIST</small></div>
                 </article>
                 <div className="identity-copy">
-                  <div className="data-stripe"><span>LOCATION</span><b>INDONESIA / REMOTE</b></div>
-                  <div className="data-stripe"><span>EDUCATION</span><b>SISTEM INFORMASI — UPN &quot;VETERAN&quot; YOGYAKARTA</b></div>
-                  <div className="data-stripe"><span>STATUS</span><b className="online-copy">OPEN FOR OPPORTUNITIES</b></div>
-                  <div className="data-stripe"><span>FOCUS</span><b>WEB SYSTEMS / INTERACTION / AI</b></div>
-                  <p>IT Specialist &amp; Developer yang membangun sistem nyata — CMS landing page, AI pipeline, dan antarmuka interaktif. Fokus pada arsitektur bersih, performa, dan hasil terukur.</p>
+                  <div className="data-stripe"><span>LOCATION</span><b>YOGYAKARTA, INDONESIA</b></div>
+                  <div className="data-stripe"><span>EDUCATION</span><b>S1 SISTEM INFORMASI — UPN &quot;VETERAN&quot; YOGYAKARTA • IPK 3,81</b></div>
+                  <div className="data-stripe"><span>BASE</span><b className="online-copy">YOGYAKARTA, INDONESIA</b></div>
+                  <div className="data-stripe"><span>FOCUS</span><b>WEB SYSTEMS / MOBILE / INTERACTION</b></div>
+                  <p>IT Specialist &amp; Developer yang membangun sistem nyata — aplikasi Android, CMS untuk 4 unit bisnis, dan website produksi. Fokus pada arsitektur bersih, performa, dan hasil terukur.</p>
                   <div className="principles">
                     <div><b>01</b><span>CLARITY FIRST</span></div>
                     <div><b>02</b><span>BUILD WITH EVIDENCE</span></div>
@@ -674,13 +875,13 @@ export default function Home() {
                   <p>{projects[0].problem}</p>
                   <ul>{projects[0].stack.map((item) => <li key={item}><Check /> {item}</li>)}</ul>
                   <div className="featured-actions">
-                    <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0])}>READ CASE STUDY</button>
+                    <button className="pixel-button pixel-button--red" onClick={() => openProject(projects[0], projects)}>READ CASE STUDY</button>
                     {projects[0].demoUrl ? (
                       <a href={projects[0].demoUrl} target="_blank" rel="noopener noreferrer" className="pixel-button" style={{ display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }} onClick={() => playCue("click")}>
                         LIVE DEMO <ExternalLink size={14} />
                       </a>
                     ) : (
-                      <button className="pixel-button" onClick={() => openProject(projects[0])}>INSPECT SIGNAL <Crosshair size={14} /></button>
+                      <button className="pixel-button" onClick={() => openProject(projects[0], projects)}>INSPECT SIGNAL <Crosshair size={14} /></button>
                     )}
                   </div>
                 </div>
@@ -688,6 +889,7 @@ export default function Home() {
             </section>
 
             <section id="project-network" className="page-section projects-section" aria-labelledby="projects-title">
+              <div className="route-stage">
               <div className="section-heading section-heading--row">
                 <div><span className="section-code">NET.02 / PROJECT NETWORK</span><h2 id="projects-title">SIGNALS ACROSS<br /><em>THE GRID.</em></h2></div>
                 <p>Select a transmission to inspect its role, system, and outcome.</p>
@@ -695,10 +897,11 @@ export default function Home() {
               <div className="filter-bar" role="group" aria-label="Filter projects">
                 {categories.map((category) => <button key={category} className={projectFilter === category ? "is-active" : ""} onClick={() => applyProjectFilter(category)}>{category}<span>{category === "ALL" ? projects.length : projects.filter((project) => project.category === category).length}</span></button>)}
               </div>
-              <div className="project-grid">
+              <div className="route-viewport">
+              <div className="project-grid route-track">
                 {filteredProjects.map((project, index) => (
-                  <article key={project.id} className={`project-card project-card--${project.accent}`}>
-                    <button className="project-card__hit" onClick={() => openProject(project)} aria-label={`Open case study ${project.title}`} />
+                  <article key={project.id} className="project-card">
+                    <button className="project-card__hit" onClick={() => openProject(project, projects)} aria-label={`Open case study ${project.title}`} />
                     <div className="project-card__visual">
                       <div className="mini-radar"><Radar /><i /></div>
                       <span className="project-number">0{index + 1}</span>
@@ -714,20 +917,49 @@ export default function Home() {
                   </article>
                 ))}
               </div>
+              </div>
               {filteredProjects.length === 0 && <div className="empty-state"><Radar /><h3>NO SIGNAL DETECTED</h3><button onClick={() => setProjectFilter("ALL")}>CLEAR FILTER</button></div>}
+              <div className="route-progress" aria-hidden="true"><i className="route-progress__fill" /></div>
+              </div>
+              <div className="campus-block">
+                <div className="campus-head">
+                  <span className="section-code">KUL.03 / PROYEK KULIAH</span>
+                  <h3>PROYEK KULIAH <em>— COURSEWORK SIGNALS</em></h3>
+                  <p>Academic projects from university courses — deliberately kept separate from the professional work above.</p>
+                </div>
+                <div className="project-grid">
+                  {campusProjects.map((project, index) => (
+                    <article key={project.id} className="project-card">
+                      <button className="project-card__hit" onClick={() => openProject(project, campusProjects)} aria-label={`Open case study ${project.title}`} />
+                      <div className="project-card__visual">
+                        <div className="mini-radar"><Radar /><i /></div>
+                        <span className="project-number">0{index + 1}</span>
+                        <div className="project-node" />
+                      </div>
+                      <div className="project-card__body">
+                        <div><span>{project.signal}</span><span>{project.year}</span></div>
+                        <h3>{project.title}</h3>
+                        <p>{project.summary}</p>
+                        <div className="tag-row">{project.stack.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}</div>
+                        <span className="project-open">OPEN SIGNAL <ChevronRight /></span>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
             </section>
 
             <section id="skills" className="page-section skills-section" aria-labelledby="skills-title">
               <div className="section-heading">
                 <span className="section-code">TEL.03 / SKILLS TELEMETRY</span>
                 <h2 id="skills-title">CAPABILITY<br /><em>SCAN RESULTS.</em></h2>
-                <p>Every capability is backed by a real project signal — from PHP 8 CMS work to AI prediction pipelines.</p>
+                <p>Every capability is backed by a real project signal — from a Flutter Android app to production CMS work across 4 business units.</p>
               </div>
               <div className="skills-layout">
                 <div className="telemetry-radar" aria-hidden="true">
                   <div className="telemetry-sweep" />
                   <span className="axis axis--x" /><span className="axis axis--y" />
-                  {skillGroups.map((group, index) => <button key={group.id} className={`telemetry-node telemetry-node--${index + 1} ${skillGroup === group.id ? "is-active" : ""}`} onClick={() => setSkillGroup(group.id)} tabIndex={-1}><i /><span>{group.id === "data" ? "DATA / AI" : group.id.toUpperCase()}</span></button>)}
+                  {skillGroups.map((group, index) => <button key={group.id} className={`telemetry-node telemetry-node--${index + 1} ${skillGroup === group.id ? "is-active" : ""}`} onClick={() => setSkillGroup(group.id)} tabIndex={-1}><i /><span>{group.title}</span></button>)}
                   <div className="radar-center"><Crosshair /><span>SKILL CORE</span></div>
                 </div>
                 <div className="skill-panels">
@@ -776,8 +1008,17 @@ export default function Home() {
               </div>
               <div className="archive-grid">
                 {archiveItems.map((item) => (
-                  <article key={item.index} className={`archive-card archive-card--${item.color}`}>
-                    <div className="archive-visual"><span>{item.index}</span><div className="archive-orbit"><i /><i /><i /></div><Play /></div>
+                  <article
+                    key={item.index}
+                    className={`archive-card archive-card--${item.color} ${fannedArchive === item.index ? "is-fanned" : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className="archive-visual"
+                      aria-pressed={fannedArchive === item.index}
+                      aria-label={`Buka kipas arsip ${item.title}`}
+                      onClick={() => setFannedArchive((current) => (current === item.index ? null : item.index))}
+                    ><span>{item.index}</span><div className="archive-orbit"><i /><i /><i /></div><Play /></button>
                     <div className="archive-copy"><small>{item.type}</small><h3>{item.title}</h3><p>{item.copy}</p><span>{item.meta}</span><button onClick={() => playCue("click")}>OPEN ARCHIVE <ExternalLink /></button></div>
                   </article>
                 ))}
@@ -789,10 +1030,10 @@ export default function Home() {
                 <span className="section-code">COM.06 / OPEN CHANNEL</span>
                 <h2 id="contact-title">LET&apos;S BUILD<br /><em>THE NEXT SIGNAL.</em></h2>
                 <p>Have a role, project, or strange web idea? Open a channel.</p>
-                <div className="contact-status"><i /><span>STATUS</span><b>AVAILABLE FOR SELECT OPPORTUNITIES</b></div>
+                <div className="contact-status"><i /><span>SIGNAL CHANNEL</span><b>DIRECT MESSAGE & EMAIL</b></div>
                 <button className="email-copy" onClick={copyEmail}><Mail /><span>ezajidan@gmail.com</span>{copied ? <Check /> : <Copy />}</button>
                 <div className="social-row">
-                  <button aria-label="GitHub" onClick={() => window.open("https://github.com/WildaGhoniyuJiddan/WorthGaBang-", "_blank")}><GitBranch /> GITHUB <ExternalLink /></button>
+                  <button aria-label="GitHub" onClick={() => window.open("https://github.com/WildaGhoniyuJiddan", "_blank")}><GitBranch /> GITHUB <ExternalLink /></button>
                   <button aria-label="LinkedIn" onClick={() => window.open("https://www.linkedin.com/in/wilda-ghoniyu-jiddan/", "_blank")}><Globe2 /> LINKEDIN <ExternalLink /></button>
                 </div>
                 <div className="download-card">
@@ -833,6 +1074,8 @@ export default function Home() {
             </footer>
           </div>
         </div>
+
+        <StickyCta />
 
         <footer className="ticker" aria-label="System status ticker">
           <div className="ticker__badge">
@@ -894,7 +1137,7 @@ export default function Home() {
           <button className="drawer-dismiss-layer" onClick={closeProject} aria-label="Close project detail" />
           <aside className="project-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
             <div className="drawer-top"><button onClick={closeProject}><ArrowLeft /> BACK TO NETWORK</button><span>{selectedProject.signal}</span><button onClick={closeProject} aria-label="Close project detail"><X /></button></div>
-            <div className={`drawer-hero drawer-hero--${selectedProject.accent}`}>
+            <div className="drawer-hero">
               <div className="drawer-radar"><Radar /><i /></div>
               <span>{selectedProject.category}</span><h2 id="drawer-title">{selectedProject.title}</h2><div><b>{selectedProject.status}</b><b>{selectedProject.year}</b></div>
             </div>
