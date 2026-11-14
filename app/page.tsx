@@ -874,17 +874,11 @@ export default function Home() {
               </div>
               <article className="featured-build">
                 <div className="featured-media">
-                  <div className="featured-split">
-                    <figure className="featured-shot">
-                      <img src="/sites/yapresindo.jpg" alt="yapresindo.com — official website of a TEMBUSIN business unit" />
-                      <span className="featured-shot__chip">yapresindo.com</span>
-                    </figure>
-                    <figure className="featured-shot">
-                      <img src="/sites/braindicator.jpg" alt="braindicator.com — official website of a TEMBUSIN business unit" />
-                      <span className="featured-shot__chip">braindicator.com</span>
-                    </figure>
-                  </div>
-                  <div className="media-caption"><span>FIELD CAPTURE // TEMBUSIN OFFICIAL WEBSITES</span><b>yapresindo.com × braindicator.com</b></div>
+                  <figure className="featured-shot">
+                    <img src="/sites/worthbang-repo.png" alt="WorthGaBang-AndroidVer — GitHub repository of the WorthBang Android app" />
+                    <span className="featured-shot__chip">WorthGaBang-AndroidVer</span>
+                  </figure>
+                  <div className="media-caption"><span>SOURCE CAPTURE // GITHUB REPOSITORY</span><b>WildaGhoniyuJiddan/WorthGaBang-AndroidVer</b></div>
                 </div>
                 <div className="featured-data">
                   <div className="featured-meta"><span>{projects[0].year}</span><span>{projects[0].role}</span><span>{projects[0].status}</span></div>
