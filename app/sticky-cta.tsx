@@ -6,7 +6,8 @@ import { Download, Mail } from "lucide-react";
 // Fase 3 (PLAN-REDESIGN-2026-11-13.md Bagian 4 #4): sticky mini-CTA. Appears
 // once the hero has scrolled out of the .page-scroll viewport and hides
 // again while the contact section is on screen, so it never duplicates the
-// contact block. Positioned absolute inside .control-room (see globals.css)
+// contact block. It also hides over the featured build, whose own action
+// buttons sit where the CTA floats. Positioned absolute inside .control-room (see globals.css)
 // above the ticker; on mobile it sits above the bottom nav. The entry is a
 // CSS opacity/transform transition — under prefers-reduced-motion the global
 // rule collapses transition durations, so it simply appears statically.
@@ -17,6 +18,7 @@ export default function StickyCta() {
     const scroller = document.querySelector<HTMLElement>(".page-scroll");
     const hero = document.getElementById("command-center");
     const contact = document.getElementById("contact");
+    const featured = document.querySelector<HTMLElement>(".featured-section");
     if (!scroller || !hero || !contact) return;
 
     let ticking = false;
@@ -26,7 +28,9 @@ export default function StickyCta() {
       const pastHero = hero.getBoundingClientRect().bottom <= view.top + 4;
       const box = contact.getBoundingClientRect();
       const contactVisible = box.top < view.bottom && box.bottom > view.top;
-      setVisible(pastHero && !contactVisible);
+      const fbox = featured?.getBoundingClientRect();
+      const featuredVisible = !!fbox && fbox.top < view.bottom && fbox.bottom > view.top;
+      setVisible(pastHero && !contactVisible && !featuredVisible);
     };
     const onScroll = () => {
       if (!ticking) {

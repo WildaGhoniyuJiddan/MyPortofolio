@@ -7,6 +7,7 @@ import {
   BriefcaseBusiness,
   Check,
   ChevronRight,
+  Bot,
   Code2,
   Command,
   Copy,
@@ -62,6 +63,7 @@ type Project = {
   featured?: boolean;
   demoUrl?: string;
   repoUrl?: string;
+  image?: string;
 };
 
 // Featured signals — synced to the final CV (Nov 2026), order fixed by plan.
@@ -81,6 +83,8 @@ const projects: Project[] = [
     stack: ["FLUTTER", "DART", "FASTAPI", "SUPABASE"],
     position: { left: "32%", top: "42%" },
     featured: true,
+    repoUrl: "https://github.com/WildaGhoniyuJiddan/WorthGaBang-AndroidVer",
+    image: "/sites/worthbang-repo.png",
   },
   {
     id: "tembusin-landing",
@@ -97,7 +101,6 @@ const projects: Project[] = [
     stack: ["PHP", "JAVASCRIPT", "HTML5", "CSS3"],
     position: { left: "68%", top: "42%" },
     featured: true,
-    demoUrl: "https://yapresindo.com",
   },
   {
     id: "tembusin-utm",
@@ -131,6 +134,7 @@ const projects: Project[] = [
     position: { left: "18%", top: "66%" },
     featured: true,
     demoUrl: "https://braindicator.com",
+    image: "/sites/yapresindo.jpg",
   },
 ];
 
@@ -150,6 +154,9 @@ const campusProjects: Project[] = [
     result: "Entered for Bali DigiFest 2026 with a working grounded-RAG prototype — legal answers cite real regulations or abstain.",
     stack: ["SVELTE", "FASTAPI", "GEMINI", "RAG"],
     position: { left: "82%", top: "66%" },
+    repoUrl: "https://github.com/WildaGhoniyuJiddan/pramana1",
+    demoUrl: "https://pramana1.vercel.app",
+    image: "/sites/pramana.jpg",
   },
   {
     id: "mamas",
@@ -182,12 +189,13 @@ const skillGroups = [
   { id: "mobile", title: "MOBILE DEVELOPMENT", icon: Zap, color: "cyan", skills: ["Flutter", "Dart", "Android", "Material UI"] },
   { id: "data", title: "DATA & BACKEND", icon: Database, color: "cyan", skills: ["Python / FastAPI", "PHP / MySQL", "Supabase / PostgreSQL", "REST APIs"] },
   { id: "tools", title: "TOOLS & METODE", icon: Palette, color: "cyan", skills: ["Git / GitHub", "Figma", "UTM Analytics", "Design Systems"] },
+  { id: "agents", title: "AI AGENTS & SKILLS", icon: Bot, color: "cyan", skills: ["AI Agent Setup", "Hermes Orchestration", "Custom Skill Engineering", "Prompt & Workflow Design"] },
 ];
 
 const archiveItems = [
-  { index: "01", type: "EXPERIMENT", title: "SIGNAL VISUALIZER", copy: "A canvas-based signal visualizer exploring motion and audio feedback.", meta: "CANVAS / AUDIO", color: "cyan" },
-  { index: "02", type: "CASE NOTE", title: "MOTION AS FEEDBACK", copy: "Why motion belongs in interfaces — and how feedback loops make software feel alive.", meta: "ARTICLE / 08 MIN", color: "cyan" },
-  { index: "03", type: "PROTOTYPE", title: "RADAR UI STUDY", copy: "A radar-inspired interface study pushing density and readability to the edge.", meta: "INTERACTIVE DEMO", color: "cyan" },
+  { index: "01", type: "PROTOTYPE", title: "JALURAI", copy: "Pre-dispatch decision support for Indonesian logistics distributors and operators — delay risk, estimated lateness, the factors behind the call, and recommended actions before an order ships.", meta: "DECISION SUPPORT / LOGISTICS", color: "cyan", url: "https://github.com/WildaGhoniyuJiddan/JalurAI" },
+  { index: "02", type: "WEB APP", title: "WARUNGKU INSIGHT", copy: "Small-shop (warung) web app — cashier with receipts, automatic stock tracking, and an analytics dashboard with automatic insights. Built as the IBM Data Fundamentals capstone.", meta: "CAPSTONE / JAVASCRIPT", color: "cyan", url: "https://github.com/WildaGhoniyuJiddan/Capstone-Project" },
+  { index: "03", type: "EXPERIMENT", title: "TAP2KNOW", copy: "A web tool that makes building a portfolio website easy — pick, fill, and publish without starting from a blank page.", meta: "NEXT.JS / WEB TOOL", color: "cyan", url: "https://github.com/WildaGhoniyuJiddan/Tap2Know" },
   { index: "04", type: "CREDENTIAL", title: "DATATHON RISTEK FASILKOM UI x OPENAI", copy: "National-level datathon participant — data, models, and a ticking clock, against teams from across Indonesia.", meta: "NATIONAL PARTICIPANT / 2026", color: "cyan" },
   { index: "05", type: "CREDENTIAL", title: "GEMINI CERTIFIED EDUCATOR", copy: "Google for Education certification for applied AI in learning — Gemini, verified and on record.", meta: "GOOGLE FOR EDUCATION / THRU 2029", color: "cyan" },
 ];
@@ -866,8 +874,17 @@ export default function Home() {
               </div>
               <article className="featured-build">
                 <div className="featured-media">
-                  <div className="featured-crosshair"><Crosshair /><span>LOCKED</span></div>
-                  <div className="media-caption"><span>LIVE PREVIEW // 001</span><b>{projects[0].title}</b></div>
+                  <div className="featured-split">
+                    <figure className="featured-shot">
+                      <img src="/sites/yapresindo.jpg" alt="yapresindo.com — official website of a TEMBUSIN business unit" />
+                      <span className="featured-shot__chip">yapresindo.com</span>
+                    </figure>
+                    <figure className="featured-shot">
+                      <img src="/sites/braindicator.jpg" alt="braindicator.com — official website of a TEMBUSIN business unit" />
+                      <span className="featured-shot__chip">braindicator.com</span>
+                    </figure>
+                  </div>
+                  <div className="media-caption"><span>FIELD CAPTURE // TEMBUSIN OFFICIAL WEBSITES</span><b>yapresindo.com × braindicator.com</b></div>
                 </div>
                 <div className="featured-data">
                   <div className="featured-meta"><span>{projects[0].year}</span><span>{projects[0].role}</span><span>{projects[0].status}</span></div>
@@ -903,6 +920,7 @@ export default function Home() {
                   <article key={project.id} className="project-card">
                     <button className="project-card__hit" onClick={() => openProject(project, projects)} aria-label={`Open case study ${project.title}`} />
                     <div className="project-card__visual">
+                      {project.image && <img className="project-card__img" src={project.image} alt={project.title} loading="lazy" />}
                       <div className="mini-radar"><Radar /><i /></div>
                       <span className="project-number">0{index + 1}</span>
                       <div className="project-node" />
@@ -932,6 +950,7 @@ export default function Home() {
                     <article key={project.id} className="project-card">
                       <button className="project-card__hit" onClick={() => openProject(project, campusProjects)} aria-label={`Open case study ${project.title}`} />
                       <div className="project-card__visual">
+                        {project.image && <img className="project-card__img" src={project.image} alt={project.title} loading="lazy" />}
                         <div className="mini-radar"><Radar /><i /></div>
                         <span className="project-number">0{index + 1}</span>
                         <div className="project-node" />
@@ -968,7 +987,7 @@ export default function Home() {
                     return (
                       <button key={group.id} className={`skill-panel skill-panel--${group.color} ${skillGroup === group.id ? "is-active" : ""}`} onClick={() => { setSkillGroup(group.id); playCue("click"); }}>
                         <span className="skill-icon"><Icon /></span>
-                        <span className="skill-copy"><small>{group.id.toUpperCase()} / 04</small><b>{group.title}</b><em>{group.skills.join(" // ")}</em></span>
+                        <span className="skill-copy"><small>{group.id.toUpperCase()} / {String(skillGroups.length).padStart(2, "0")}</small><b>{group.title}</b><em>{group.skills.join(" // ")}</em></span>
                         <ChevronRight />
                       </button>
                     );
@@ -1019,7 +1038,7 @@ export default function Home() {
                       aria-label={`Buka kipas arsip ${item.title}`}
                       onClick={() => setFannedArchive((current) => (current === item.index ? null : item.index))}
                     ><span>{item.index}</span><div className="archive-orbit"><i /><i /><i /></div><Play /></button>
-                    <div className="archive-copy"><small>{item.type}</small><h3>{item.title}</h3><p>{item.copy}</p><span>{item.meta}</span><button onClick={() => playCue("click")}>OPEN ARCHIVE <ExternalLink /></button></div>
+                    <div className="archive-copy"><small>{item.type}</small><h3>{item.title}</h3><p>{item.copy}</p><span>{item.meta}</span>{"url" in item && item.url ? <a className="archive-open" href={item.url} target="_blank" rel="noopener noreferrer" onClick={() => playCue("click")}>OPEN ARCHIVE <ExternalLink /></a> : <button onClick={() => playCue("click")}>OPEN ARCHIVE <ExternalLink /></button>}</div>
                   </article>
                 ))}
               </div>
